@@ -3,143 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CV Fraud Detection — SYSTRA</title>
+<title>CV Fraud Detection — SYSTRA Internal Control</title>
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   SYSTRA BRAND TOKENS
-═══════════════════════════════════════════ */
 :root {
-  --red:        #d22328;
-  --red-dark:   #a51a1e;
-  --red-light:  #f9e0e0;
-  --teal:       #003e4a;
-  --teal-mid:   #5c7683;
-  --teal-lt:    #2eb2b2;
-  --teal-pale:  #e8f4f4;
-  --orange:     #ef8029;
-  --orange-bg:  #fef3e8;
-  --green:      #73b140;
-  --green-bg:   #edf5e1;
-  --border:     #dde4e8;
-  --text:       #1a2430;
-  --muted:      #5c6b75;
-  --surface:    #ffffff;
-  --sidebar:    #f2f5f7;
+  --red:       #d22328;
+  --red-dark:  #a51a1e;
+  --red-light: #f9e0e0;
+  --teal:      #003e4a;
+  --teal-mid:  #5c7683;
+  --teal-lt:   #2eb2b2;
+  --teal-pale: #e8f4f4;
+  --orange:    #ef8029;
+  --orange-bg: #fef3e8;
+  --green:     #73b140;
+  --green-bg:  #edf5e1;
+  --border:    #dde4e8;
+  --text:      #1a2430;
+  --muted:     #5c6b75;
+  --surface:   #ffffff;
+  --sidebar:   #f2f5f7;
   --fh: 'Raleway', sans-serif;
   --fb: 'Source Sans 3', sans-serif;
 }
 
-/* ─── RESET & FIXED VIEWPORT ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   width: 100%; height: 100%;
-  overflow: hidden;             /* No scroll — Storyline frame */
+  overflow: hidden;
   font-family: var(--fb);
   background: #e2e8ec;
 }
 
-/* ─── APP: fills iframe exactly ─── */
 #app {
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background: var(--surface);
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   overflow: hidden;
 }
 
-/* ─── TOP BAR ─── */
+/* ── TOP BAR ── */
 .topbar {
-  background: var(--teal);
-  color: white;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  height: 44px;
-  gap: 12px;
-  flex-shrink: 0;
+  background: var(--teal); color: white;
+  display: flex; align-items: center;
+  padding: 0 16px; height: 44px; gap: 12px; flex-shrink: 0;
 }
 .tb-logo {
   display: flex; align-items: center; gap: 8px;
-  padding-right: 14px;
-  border-right: 1px solid rgba(255,255,255,0.2);
+  padding-right: 14px; border-right: 1px solid rgba(255,255,255,0.2);
 }
-.tb-logo-img {
-  height: 22px; width: auto;
-  filter: brightness(0) invert(1);
-  object-fit: contain;
-}
-.tb-logo-text {
-  font-family: var(--fh);
-  font-weight: 800; font-size: 17px;
-  letter-spacing: 2px; color: white;
-}
+.tb-logo-img  { height: 22px; filter: brightness(0) invert(1); object-fit: contain; }
+.tb-logo-text { font-family: var(--fh); font-weight: 800; font-size: 17px; letter-spacing: 2px; display: none; }
 .tb-logo-text span { color: var(--red); }
-.tb-course {
-  font-size: 12px; opacity: 0.8; flex: 1;
-}
+.tb-course    { font-size: 12px; opacity: .8; flex: 1; }
 .tb-sound {
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: white; padding: 4px 10px;
-  border-radius: 4px; cursor: pointer;
-  font-size: 11px; font-family: var(--fb);
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+  color: white; padding: 4px 10px; border-radius: 4px;
+  cursor: pointer; font-size: 11px; font-family: var(--fb);
 }
 .tb-sound:hover { background: rgba(255,255,255,0.22); }
 
-/* ─── RED ACCENT + PROGRESS ─── */
-.red-line {
-  height: 3px;
-  background: linear-gradient(90deg, var(--red) 0%, var(--orange) 60%, #f8b61d 100%);
-  flex-shrink: 0;
-}
+.red-line { height: 3px; background: linear-gradient(90deg, var(--red), var(--orange) 60%, #f8b61d); flex-shrink: 0; }
 .prog-track { height: 3px; background: rgba(0,62,74,0.15); flex-shrink: 0; }
 .prog-fill  { height: 100%; background: var(--teal-lt); transition: width .6s ease; }
 
-/* ─── BODY LAYOUT ─── */
-.body-wrap {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-  min-height: 0;
-}
+/* ── LAYOUT ── */
+.body-wrap { display: flex; flex: 1; overflow: hidden; min-height: 0; }
 
-/* ─── SIDEBAR ─── */
+/* ── SIDEBAR ── */
 .sidebar {
-  width: 210px;
-  background: var(--sidebar);
+  width: 210px; background: var(--sidebar);
   border-right: 1px solid var(--border);
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  flex-shrink: 0; display: flex; flex-direction: column; overflow: hidden;
 }
-.sb-brand {
-  padding: 12px 14px 10px;
-  border-bottom: 1px solid var(--border);
-}
-.sb-brand-img { height: 26px; object-fit: contain; object-position: left; }
+.sb-brand { padding: 11px 14px 9px; border-bottom: 1px solid var(--border); }
+.sb-brand-img { height: 24px; object-fit: contain; object-position: left; }
 .sb-tag {
-  font-family: var(--fh);
-  font-size: 9px; font-weight: 700;
-  color: var(--muted); letter-spacing: 1px;
-  text-transform: uppercase; margin-top: 4px;
+  font-family: var(--fh); font-size: 9px; font-weight: 700;
+  color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 3px;
 }
-.sb-sec { padding: 6px 0; border-bottom: 1px solid var(--border); }
+.sb-sec { padding: 5px 0; border-bottom: 1px solid var(--border); }
 .sb-head {
   font-family: var(--fh); font-size: 9px; font-weight: 700;
-  color: var(--red); text-transform: uppercase;
-  letter-spacing: 1px; padding: 5px 14px 3px;
+  color: var(--red); text-transform: uppercase; letter-spacing: 1px; padding: 5px 14px 3px;
 }
 .sb-item {
   display: flex; align-items: center; gap: 8px;
-  padding: 7px 14px; cursor: pointer;
-  font-size: 12px; color: var(--text);
-  transition: background .15s;
-  border-left: 3px solid transparent;
-  line-height: 1.3;
+  padding: 6px 14px; cursor: pointer; font-size: 12px; color: var(--text);
+  transition: background .15s; border-left: 3px solid transparent; line-height: 1.3;
 }
 .sb-item:hover { background: #e0e8ec; }
 .sb-item.active { background: #dce8ea; border-left-color: var(--teal); font-weight: 600; color: var(--teal); }
@@ -149,318 +101,213 @@ html, body {
 .sb-item.active .dot { background: var(--teal); }
 .sb-num { font-size: 10px; color: var(--muted); margin-left: auto; }
 
-.sb-score { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.sb-score { padding: 10px 14px; border-bottom: 1px solid var(--border); }
 .sc-lbl { font-family: var(--fh); font-size: 9px; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: .8px; }
-.sc-val { font-family: var(--fh); font-size: 28px; font-weight: 800; color: var(--teal); line-height: 1; margin: 2px 0; }
+.sc-val { font-family: var(--fh); font-size: 26px; font-weight: 800; color: var(--teal); line-height: 1; margin: 2px 0; }
 .sc-of  { font-size: 11px; color: var(--muted); }
-
-.sb-key { padding: 10px 14px; }
+.sb-key { padding: 9px 14px; }
 .ki { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
 .ki-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
-/* ─── CONTENT AREA (scrollable) ─── */
-.content {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: #f5f7f9;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
+/* ── CONTENT ── */
+.content { flex: 1; overflow-y: auto; overflow-x: hidden; background: #f5f7f9; display: flex; flex-direction: column; min-height: 0; }
 
-/* ─── SCREENS ─── */
+/* ── SCREENS ── */
 .screen { display: none; }
 .screen.show { display: flex; flex-direction: column; }
 
-/* ─── INTRO ─── */
+/* ── INTRO ── */
 #s-intro {
-  align-items: center; justify-content: center;
-  padding: 28px 24px; text-align: center;
-  background: linear-gradient(150deg, #001f28 0%, var(--teal) 55%, #0d7a8c 100%);
-  color: white; min-height: 100%;
-  flex: 1;
-}
-.i-logo-img { height: 40px; filter: brightness(0) invert(1); object-fit: contain; margin-bottom: 6px; }
-.i-logo-text { font-family: var(--fh); font-size: 30px; font-weight: 800; letter-spacing: 3px; }
-.i-logo-text span { color: var(--red); }
-.i-tag { font-size: 10px; letter-spacing: 2px; opacity: .6; text-transform: uppercase; margin-bottom: 20px; }
-.i-icon {
-  width: 76px; height: 76px;
-  background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.16);
-  border-radius: 20px; display: flex; align-items: center; justify-content: center;
-  font-size: 38px; margin: 0 auto 16px;
-  animation: pulse 3s ease-in-out infinite;
-}
-@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,0.08);} 50%{box-shadow:0 0 0 14px rgba(255,255,255,0);} }
-.i-bar { width: 40px; height: 3px; background: var(--red); border-radius: 2px; margin: 0 auto 14px; }
-.i-title { font-family: var(--fh); font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-.i-sub { font-size: 13px; opacity: .82; max-width: 480px; line-height: 1.65; margin-bottom: 22px; }
-.i-stats { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; justify-content: center; }
-.i-stat {
-  background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 8px; padding: 10px 16px; min-width: 90px; text-align: center;
-}
-.i-stat-n { font-family: var(--fh); font-size: 22px; font-weight: 800; color: #50e6ff; display: block; }
-.i-stat-l { font-size: 10px; opacity: .75; margin-top: 1px; }
-.start-btn {
-  background: var(--red); color: white; border: none;
-  border-radius: 7px; padding: 12px 38px;
-  font-size: 14px; font-weight: 800; cursor: pointer;
-  font-family: var(--fh); letter-spacing: .5px; text-transform: uppercase;
-  transition: all .2s;
-}
-.start-btn:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(210,35,40,.38); }
-
-/* ─── RESULTS ─── */
-#s-results {
-  align-items: center; justify-content: center;
-  padding: 28px 24px; text-align: center;
+  align-items: center; justify-content: center; padding: 26px 24px;
+  text-align: center;
   background: linear-gradient(150deg, #001f28 0%, var(--teal) 55%, #0d7a8c 100%);
   color: white; min-height: 100%; flex: 1;
 }
-.r-logo { height: 30px; filter: brightness(0) invert(1); object-fit: contain; margin-bottom: 16px; }
-.r-ring {
-  width: 120px; height: 120px; border-radius: 50%;
-  border: 5px solid rgba(255,255,255,0.2);
-  display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
-}
-.r-score { font-family: var(--fh); font-size: 36px; font-weight: 800; color: #50e6ff; }
-.r-pts   { font-size: 12px; opacity: .7; }
-.r-title { font-family: var(--fh); font-size: 22px; font-weight: 800; margin-bottom: 8px; }
-.r-sub   { font-size: 13px; opacity: .82; max-width: 460px; line-height: 1.65; margin-bottom: 22px; }
-.r-chips { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; justify-content: center; }
-.chip { border-radius: 8px; padding: 10px 18px; font-size: 12px; font-weight: 700; font-family: var(--fh); min-width: 80px; }
-.chip span { display: block; font-size: 24px; font-weight: 800; }
+.i-logo-img { height: 38px; filter: brightness(0) invert(1); object-fit: contain; margin-bottom: 4px; }
+.i-logo-text { font-family: var(--fh); font-size: 28px; font-weight: 800; letter-spacing: 3px; display: none; }
+.i-logo-text span { color: var(--red); }
+.i-tag { font-size: 10px; letter-spacing: 2px; opacity: .6; text-transform: uppercase; margin-bottom: 18px; }
+.i-icon { width: 72px; height: 72px; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.16); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 14px; animation: pulse 3s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,0.08);}50%{box-shadow:0 0 0 14px rgba(255,255,255,0);} }
+.i-bar { width: 38px; height: 3px; background: var(--red); border-radius: 2px; margin: 0 auto 12px; }
+.i-title { font-family: var(--fh); font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+.i-sub { font-size: 13px; opacity: .82; max-width: 480px; line-height: 1.65; margin-bottom: 20px; }
+.i-stats { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; justify-content: center; }
+.i-stat { background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; padding: 9px 14px; min-width: 88px; text-align: center; }
+.i-stat-n { font-family: var(--fh); font-size: 20px; font-weight: 800; color: #50e6ff; display: block; }
+.i-stat-l { font-size: 10px; opacity: .75; margin-top: 1px; }
+.start-btn { background: var(--red); color: white; border: none; border-radius: 7px; padding: 11px 36px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: var(--fh); letter-spacing: .5px; text-transform: uppercase; transition: all .2s; }
+.start-btn:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(210,35,40,.38); }
+
+/* ── RESULTS ── */
+#s-results { align-items: center; justify-content: center; padding: 28px 24px; text-align: center; background: linear-gradient(150deg, #001f28 0%, var(--teal) 55%, #0d7a8c 100%); color: white; min-height: 100%; flex: 1; }
+.r-logo { height: 28px; filter: brightness(0) invert(1); object-fit: contain; margin-bottom: 14px; }
+.r-ring { width: 118px; height: 118px; border-radius: 50%; border: 5px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.r-score { font-family: var(--fh); font-size: 34px; font-weight: 800; color: #50e6ff; }
+.r-pts   { font-size: 11px; opacity: .7; }
+.r-title { font-family: var(--fh); font-size: 20px; font-weight: 800; margin-bottom: 7px; }
+.r-sub   { font-size: 13px; opacity: .82; max-width: 460px; line-height: 1.65; margin-bottom: 20px; }
+.r-chips { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; justify-content: center; }
+.chip { border-radius: 8px; padding: 9px 16px; font-size: 12px; font-weight: 700; font-family: var(--fh); min-width: 78px; }
+.chip span { display: block; font-size: 22px; font-weight: 800; }
 .chip-c { background: var(--green-bg); color: var(--green); }
 .chip-r { background: var(--orange-bg); color: var(--orange); }
 .chip-p { background: var(--red-light); color: var(--red); }
-.replay-btn {
-  background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.26);
-  color: white; border-radius: 7px; padding: 10px 32px;
-  font-size: 13px; font-weight: 700; cursor: pointer;
-  font-family: var(--fh); text-transform: uppercase; letter-spacing: .4px;
-  transition: all .2s;
-}
+.replay-btn { background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.26); color: white; border-radius: 7px; padding: 10px 30px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: var(--fh); text-transform: uppercase; letter-spacing: .4px; transition: all .2s; }
 .replay-btn:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
 
-/* ─── SCENE PANEL ─── */
+/* ── SCENE ── */
 .scene { display: none; flex-direction: column; flex: 1; animation: fadeUp .35s ease; }
 .scene.show { display: flex; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);} }
 
-/* ─── SCENE HEADER ─── */
+/* ── SCENE HEADER ── */
 .sc-hdr {
   background: linear-gradient(135deg, var(--teal) 0%, #005d70 60%, #0a7a8c 100%);
-  color: white; padding: 16px 20px;
-  display: flex; align-items: center; gap: 14px;
-  flex-shrink: 0; position: relative; overflow: hidden;
+  color: white; padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+  position: relative; overflow: hidden;
 }
-.sc-hdr::after {
-  content: ''; position: absolute; right: -20px; bottom: -30px;
-  width: 130px; height: 130px; border-radius: 50%;
-  background: rgba(255,255,255,0.04);
-}
-.hdr-icon {
-  width: 44px; height: 44px;
-  background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.18);
-  border-radius: 12px; display: flex; align-items: center; justify-content: center;
-  font-size: 22px; flex-shrink: 0;
-}
+.sc-hdr::after { content: ''; position: absolute; right: -20px; bottom: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+.hdr-icon { width: 42px; height: 42px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.18); border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 21px; flex-shrink: 0; }
 .hdr-meta { flex: 1; z-index: 1; }
-.hdr-badge {
-  display: inline-block; font-family: var(--fh); font-size: 8.5px; font-weight: 700;
-  letter-spacing: 1.6px; text-transform: uppercase;
-  background: var(--red); padding: 2px 9px; border-radius: 20px; margin-bottom: 6px;
-}
-.hdr-title { font-family: var(--fh); font-size: 19px; font-weight: 800; line-height: 1.15; margin-bottom: 2px; }
-.hdr-sub   { font-size: 12px; opacity: .78; }
-.hdr-pts   {
-  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 8px; padding: 8px 14px; text-align: center; flex-shrink: 0; z-index: 1;
-}
+.hdr-badge { display: inline-block; font-family: var(--fh); font-size: 8px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; background: var(--red); padding: 2px 8px; border-radius: 20px; margin-bottom: 5px; }
+.hdr-title { font-family: var(--fh); font-size: 17px; font-weight: 800; line-height: 1.15; margin-bottom: 2px; }
+.hdr-sub   { font-size: 11.5px; opacity: .78; }
+.hdr-pts   { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 7px 12px; text-align: center; flex-shrink: 0; z-index: 1; }
 .hdr-pts-lbl { font-family: var(--fh); font-size: 8px; opacity: .8; letter-spacing: 1px; text-transform: uppercase; }
-.hdr-pts-val { font-family: var(--fh); font-size: 20px; font-weight: 800; color: #50e6ff; }
+.hdr-pts-val { font-family: var(--fh); font-size: 18px; font-weight: 800; color: #50e6ff; }
 
-/* ─── ALERT BAR ─── */
-.alert {
-  display: flex; gap: 10px; align-items: flex-start;
-  padding: 9px 18px; font-size: 12.5px; line-height: 1.5;
-  flex-shrink: 0; border-bottom: 1px solid transparent;
-}
+/* ── ALERT ── */
+.alert { display: flex; gap: 10px; align-items: flex-start; padding: 8px 16px; font-size: 12px; line-height: 1.5; flex-shrink: 0; border-bottom: 1px solid transparent; }
 .alert.warn  { background: #fff8e4; border-left: 4px solid #f8b61d; border-bottom-color: #f0e090; color: #5a3e00; }
 .alert.danger{ background: var(--red-light); border-left: 4px solid var(--red); border-bottom-color: #f0c0c2; color: #5c1012; }
 .alert.ok    { background: var(--green-bg); border-left: 4px solid var(--green); border-bottom-color: #c8e8a8; color: #2a4a10; }
-.alert-icon  { font-size: 15px; margin-top: 1px; flex-shrink: 0; }
-.alert strong {
-  display: block; font-family: var(--fh); font-size: 9.5px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .7px; margin-bottom: 1px;
-}
+.alert-icon  { font-size: 14px; margin-top: 1px; flex-shrink: 0; }
+.alert strong { display: block; font-family: var(--fh); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; margin-bottom: 1px; }
 
-/* ─── SINGLE EMAIL CARD ─── */
-.email-wrap { padding: 12px 18px 6px; flex-shrink: 0; }
+/* ── EMAIL THREAD ── */
+.email-wrap { padding: 10px 16px 5px; flex-shrink: 0; }
 .email-lbl {
   font-family: var(--fh); font-size: 9px; font-weight: 700;
   text-transform: uppercase; letter-spacing: 1.2px; color: var(--red);
-  margin-bottom: 8px; display: flex; align-items: center; gap: 7px;
+  margin-bottom: 7px; display: flex; align-items: center; gap: 7px;
 }
 .email-lbl::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-.email-card {
+/* individual email card */
+.em-card {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 7px; overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,62,74,0.07);
+  border-radius: 6px; margin-bottom: 6px; overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,62,74,0.06);
+  /* timed reveal */
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .5s ease, transform .5s ease, box-shadow .2s;
 }
-.email-card.u { border-left: 3px solid var(--teal); }
-.email-card.r { border-left: 3px solid var(--red); }
-.email-card.g { border-left: 3px solid var(--green); }
+.em-card.visible { opacity: 1; transform: translateY(0); }
+.em-card:hover { box-shadow: 0 3px 10px rgba(0,62,74,0.1); }
+.em-card.u { border-left: 3px solid var(--teal); }
+.em-card.r { border-left: 3px solid var(--red); }
+.em-card.g { border-left: 3px solid var(--green); }
+
+/* "new email" typing indicator shown before card appears */
+.em-typing {
+  display: none; align-items: center; gap: 6px;
+  padding: 6px 10px; font-size: 11px; color: var(--muted);
+  font-style: italic;
+}
+.em-typing.show { display: flex; }
+.typing-dots { display: flex; gap: 3px; }
+.typing-dots span {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--teal-lt);
+  animation: blink 1.2s infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%,80%,100%{opacity:.2;} 40%{opacity:1;} }
 
 .em-head {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 9px;
   padding: 8px 12px; background: #f6f8fa;
   border-bottom: 1px solid var(--border);
-  cursor: pointer; user-select: none;
-  transition: background .15s;
+  cursor: pointer; user-select: none; transition: background .15s;
 }
 .em-head:hover { background: #edf2f5; }
-.em-av {
-  width: 32px; height: 32px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--fh); font-size: 12px; font-weight: 700;
-  color: white; flex-shrink: 0;
-}
-.em-from { font-size: 12px; font-weight: 700; color: var(--text); }
-.em-prev { font-size: 11px; color: var(--muted); }
-.em-time { font-size: 10.5px; color: var(--muted); margin-left: auto; white-space: nowrap; }
-.em-arr  { font-size: 10px; color: var(--muted); margin-left: 5px; transition: transform .2s; }
+.em-av { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--fh); font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; }
+.em-from { font-size: 11.5px; font-weight: 700; color: var(--text); }
+.em-prev { font-size: 10.5px; color: var(--muted); }
+.em-time { font-size: 10px; color: var(--muted); margin-left: auto; white-space: nowrap; }
+.em-arr  { font-size: 9px; color: var(--muted); margin-left: 4px; transition: transform .2s; }
 .em-arr.open { transform: rotate(180deg); }
 
-.em-body {
-  padding: 11px 14px; font-size: 12.5px; line-height: 1.65; color: var(--text);
-  display: none;
-}
+.em-body { padding: 10px 13px; font-size: 12.5px; line-height: 1.65; color: var(--text); display: none; }
 .em-body.open { display: block; }
-.em-body p { margin-bottom: 8px; }
+.em-body p { margin-bottom: 7px; }
 .em-body p:last-child { margin-bottom: 0; }
-.em-sig {
-  margin-top: 10px; padding-top: 8px;
-  border-top: 1px solid var(--border);
-  font-size: 11px; color: var(--muted);
-}
-.em-att {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: var(--teal-pale); border: 1px solid #b5d8d8;
-  border-radius: 4px; padding: 3px 9px; font-size: 11px;
-  color: var(--teal); margin-top: 7px; font-weight: 600; cursor: pointer;
-}
+.em-sig { margin-top: 9px; padding-top: 7px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); }
+.em-att { display: inline-flex; align-items: center; gap: 5px; background: var(--teal-pale); border: 1px solid #b5d8d8; border-radius: 4px; padding: 3px 9px; font-size: 11px; color: var(--teal); margin-top: 6px; font-weight: 600; cursor: pointer; }
 
-/* ─── CONTEXT BOX ─── */
-.ctx-box {
-  margin: 6px 18px 8px;
-  background: linear-gradient(135deg, #eef5f7, #e8f4f4);
-  border: 1px solid #c0d8dc; border-left: 4px solid var(--teal);
-  border-radius: 6px; padding: 10px 15px;
-  font-size: 13px; color: var(--text); line-height: 1.6; flex-shrink: 0;
-}
-.ctx-lbl {
-  font-family: var(--fh); font-size: 9px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 1px; color: var(--teal);
-  margin-bottom: 4px;
-}
+/* "new email" badge on unread cards */
+.em-new { display: inline-block; background: var(--red); color: white; font-family: var(--fh); font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; padding: 1px 6px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
 
-/* ─── QUESTION ─── */
-.q-zone { padding: 0 18px 12px; flex-shrink: 0; }
-.q-text {
-  font-family: var(--fh); font-size: 14px; font-weight: 700; color: var(--teal);
-  margin-bottom: 10px; padding-bottom: 8px;
-  border-bottom: 2px solid var(--teal-pale);
-}
-.opts { display: flex; flex-direction: column; gap: 7px; }
+/* ── CONTEXT BOX ── */
+.ctx-box { margin: 5px 16px 8px; background: linear-gradient(135deg, #eef5f7, #e8f4f4); border: 1px solid #c0d8dc; border-left: 4px solid var(--teal); border-radius: 6px; padding: 9px 14px; font-size: 12.5px; color: var(--text); line-height: 1.6; flex-shrink: 0; }
+.ctx-lbl { font-family: var(--fh); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--teal); margin-bottom: 4px; }
+
+/* ── QUESTION ── */
+.q-zone { padding: 0 16px 10px; flex-shrink: 0; }
+.q-text { font-family: var(--fh); font-size: 13.5px; font-weight: 700; color: var(--teal); margin-bottom: 9px; padding-bottom: 7px; border-bottom: 2px solid var(--teal-pale); }
+.opts { display: flex; flex-direction: column; gap: 6px; }
 
 .opt-btn {
   display: flex; align-items: flex-start; gap: 10px;
-  padding: 11px 13px; border: 1.5px solid var(--border);
-  border-radius: 7px; background: var(--surface);
-  cursor: pointer; text-align: left;
-  transition: all .2s; font-family: var(--fb);
-  font-size: 13px; color: var(--text); line-height: 1.45;
+  padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 7px;
+  background: var(--surface); cursor: pointer; text-align: left;
+  transition: all .2s; font-family: var(--fb); font-size: 12.5px; color: var(--text); line-height: 1.45;
 }
-.opt-btn:hover:not(:disabled) {
-  border-color: var(--teal); background: var(--teal-pale);
-  transform: translateX(3px); box-shadow: 0 2px 8px rgba(0,62,74,.09);
-}
+.opt-btn:hover:not(:disabled) { border-color: var(--teal); background: var(--teal-pale); transform: translateX(3px); box-shadow: 0 2px 8px rgba(0,62,74,.09); }
 .opt-btn:disabled { cursor: not-allowed; }
-
-.opt-l {
-  width: 27px; height: 27px; border-radius: 50%;
-  background: var(--teal-pale); color: var(--teal);
-  font-family: var(--fh); font-weight: 800; font-size: 12px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px; transition: all .2s;
-}
+.opt-l { width: 26px; height: 26px; border-radius: 50%; background: var(--teal-pale); color: var(--teal); font-family: var(--fh); font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: all .2s; }
 .opt-t { flex: 1; }
-
 .opt-btn.correct { border-color: var(--green); background: var(--green-bg); }
 .opt-btn.correct .opt-l { background: var(--green); color: white; }
 .opt-btn.risky   { border-color: var(--orange); background: var(--orange-bg); }
 .opt-btn.risky   .opt-l { background: var(--orange); color: white; }
 .opt-btn.poor    { border-color: var(--red); background: var(--red-light); }
 .opt-btn.poor    .opt-l { background: var(--red); color: white; }
-
-.opt-badge {
-  font-family: var(--fh); font-size: 9.5px; font-weight: 700;
-  padding: 2px 8px; border-radius: 20px; letter-spacing: .4px;
-  margin-left: auto; flex-shrink: 0; align-self: flex-start; margin-top: 3px;
-}
+.opt-badge { font-family: var(--fh); font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 20px; letter-spacing: .4px; margin-left: auto; flex-shrink: 0; align-self: flex-start; margin-top: 2px; }
 .b-c { background: var(--green-bg); color: var(--green); }
 .b-r { background: var(--orange-bg); color: var(--orange); }
 .b-p { background: var(--red-light); color: var(--red); }
 
-/* ─── DEBRIEF ─── */
-.debrief {
-  display: none; margin: 0 18px 12px;
-  border-radius: 8px; overflow: hidden; border: 1.5px solid;
-  animation: pop .4s cubic-bezier(.34,1.56,.64,1);
-  box-shadow: 0 4px 14px rgba(0,0,0,.08);
-}
+/* ── DEBRIEF ── */
+.debrief { display: none; margin: 0 16px 10px; border-radius: 8px; overflow: hidden; border: 1.5px solid; animation: pop .4s cubic-bezier(.34,1.56,.64,1); box-shadow: 0 4px 14px rgba(0,0,0,.08); }
 .debrief.show { display: block; }
-@keyframes pop { from{opacity:0;transform:scale(.94) translateY(6px);} to{opacity:1;transform:scale(1) translateY(0);} }
+@keyframes pop { from{opacity:0;transform:scale(.94) translateY(6px);}to{opacity:1;transform:scale(1) translateY(0);} }
 .debrief.correct { border-color: var(--green); }
 .debrief.risky   { border-color: var(--orange); }
 .debrief.poor    { border-color: var(--red); }
-
-.db-hdr {
-  padding: 10px 15px; display: flex; align-items: center; gap: 8px;
-  font-family: var(--fh); font-weight: 700; font-size: 13px; color: white;
-}
+.db-hdr { padding: 9px 14px; display: flex; align-items: center; gap: 7px; font-family: var(--fh); font-weight: 700; font-size: 13px; color: white; }
 .debrief.correct .db-hdr { background: var(--green); }
 .debrief.risky   .db-hdr { background: var(--orange); }
 .debrief.poor    .db-hdr { background: var(--red); }
-
-.db-body { padding: 11px 15px; font-size: 13px; line-height: 1.6; color: var(--text); }
+.db-body { padding: 10px 14px; font-size: 12.5px; line-height: 1.6; color: var(--text); }
 .debrief.correct .db-body { background: var(--green-bg); }
 .debrief.risky   .db-body { background: var(--orange-bg); }
 .debrief.poor    .db-body { background: var(--red-light); }
-
-.db-lesson {
-  margin-top: 8px; padding: 8px 12px;
-  background: rgba(0,0,0,0.05); border-radius: 5px;
-  font-size: 12px; font-style: italic; line-height: 1.55;
-}
+.db-lesson { margin-top: 7px; padding: 7px 11px; background: rgba(0,0,0,0.05); border-radius: 5px; font-size: 11.5px; font-style: italic; line-height: 1.55; }
 .db-lesson strong { font-style: normal; }
 
-/* ─── CONTINUE ─── */
-.cont-row { padding: 4px 18px 16px; flex-shrink: 0; }
-.cont-btn {
-  background: var(--red); color: white; border: none;
-  border-radius: 6px; padding: 10px 24px;
-  font-size: 13.5px; font-weight: 700; cursor: pointer;
-  font-family: var(--fh); letter-spacing: .3px;
-  display: flex; align-items: center; gap: 7px;
-  transition: all .2s;
-}
-.cont-btn:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 5px 16px rgba(210,35,40,.3); }
+/* ── CONTINUE ── */
+.cont-row { padding: 3px 16px 14px; flex-shrink: 0; }
+.cont-btn { background: var(--red); color: white; border: none; border-radius: 6px; padding: 9px 22px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: var(--fh); display: flex; align-items: center; gap: 6px; transition: all .2s; }
+.cont-btn:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 5px 14px rgba(210,35,40,.3); }
 .cont-btn:disabled { background: #c0c8cc; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ── QUESTION locked until all emails shown ── */
+.q-locked { opacity: .4; pointer-events: none; transition: opacity .6s ease; }
+.q-locked.unlocked { opacity: 1; pointer-events: auto; }
 </style>
 </head>
 <body>
@@ -471,23 +318,21 @@ html, body {
     <div class="tb-logo">
       <img src="Logo_SYSTRA.png" class="tb-logo-img" alt="SYSTRA"
         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <div class="tb-logo-text" style="display:none">SYS<span>TRA</span></div>
+      <div class="tb-logo-text">SYS<span>TRA</span></div>
     </div>
-    <div class="tb-course">Ethics &amp; Compliance · CV Fraud Detection</div>
+    <div class="tb-course">Internal Control · CV Fraud Detection</div>
     <button class="tb-sound" id="soundBtn" onclick="toggleSound()">🔊 Sound</button>
   </div>
   <div class="red-line"></div>
   <div class="prog-track"><div class="prog-fill" id="prog" style="width:0%"></div></div>
 
-  <!-- BODY -->
   <div class="body-wrap">
 
     <!-- SIDEBAR -->
     <nav class="sidebar">
       <div class="sb-brand">
-        <img src="Logo_SYSTRA.png" class="sb-brand-img" alt="SYSTRA"
-          onerror="this.style.display='none'">
-        <div class="sb-tag">Ethics &amp; Compliance</div>
+        <img src="Logo_SYSTRA.png" class="sb-brand-img" alt="SYSTRA" onerror="this.style.display='none'">
+        <div class="sb-tag">Internal Control</div>
       </div>
       <div class="sb-sec">
         <div class="sb-head">📁 Case Inbox</div>
@@ -517,8 +362,8 @@ html, body {
       <div id="s-intro" class="screen show">
         <img src="Logo_SYSTRA.png" class="i-logo-img" alt="SYSTRA"
           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-        <div class="i-logo-text" style="display:none">SYS<span>TRA</span></div>
-        <div class="i-tag">Ethics &amp; Compliance Training</div>
+        <div class="i-logo-text">SYS<span>TRA</span></div>
+        <div class="i-tag">Internal Control · Training Module</div>
         <div class="i-icon">🔍</div>
         <div class="i-bar"></div>
         <div class="i-title">CV Fraud Detection</div>
@@ -537,7 +382,7 @@ html, body {
         <img src="Logo_SYSTRA.png" class="r-logo" alt="SYSTRA" onerror="this.style.display='none'">
         <div class="r-ring"><div><div class="r-score" id="finalScore">0</div><div class="r-pts">/ 50 pts</div></div></div>
         <div class="r-title" id="rTitle"></div>
-        <div class="r-sub" id="rSub"></div>
+        <div class="r-sub"   id="rSub"></div>
         <div class="r-chips">
           <div class="chip chip-c"><span id="cC">0</span>✅ Best</div>
           <div class="chip chip-r"><span id="cR">0</span>⚠ Risky</div>
@@ -546,41 +391,76 @@ html, body {
         <button class="replay-btn" onclick="replay()">↩ &nbsp;Replay</button>
       </div>
 
-      <!-- ═══════════════════════════════════
+      <!-- ═══════════════════════════════════════════
            SCENE 1 — A STELLAR CV ARRIVES
-      ═══════════════════════════════════ -->
+           Emails revealed: 07:30 → 08:47 → 09:14
+      ═══════════════════════════════════════════ -->
       <div class="scene" id="scene-1">
         <div class="sc-hdr">
           <div class="hdr-icon">📨</div>
           <div class="hdr-meta">
             <div class="hdr-badge">Scene 1 of 5</div>
             <div class="hdr-title">A Stellar CV Arrives</div>
-            <div class="hdr-sub">Recruitment under pressure — the clock is ticking</div>
+            <div class="hdr-sub">Recruitment under pressure — the penalty clock is running</div>
           </div>
           <div class="hdr-pts"><div class="hdr-pts-lbl">Score</div><div class="hdr-pts-val" id="sc1">—</div></div>
         </div>
-
         <div class="alert warn">
           <div class="alert-icon">⚠️</div>
-          <div><strong>Recruitment Pressure</strong>Client requires mobilisation in 5 days or SYSTRA incurs a daily penalty. Shortlist finalised — reference checks are still pending.</div>
+          <div><strong>Recruitment Pressure</strong>Client requires mobilisation in 5 days or SYSTRA incurs a daily penalty. Shortlist finalised — background checks are still pending.</div>
         </div>
 
         <div class="email-wrap">
-          <div class="email-lbl">📬 Key Email</div>
-          <div class="email-card r">
+          <div class="email-lbl">📬 Incoming Emails</div>
+
+          <!-- Email 1 — appears immediately -->
+          <div class="em-typing show" id="ty1-1"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card r" id="em1-1">
+            <div class="em-head" onclick="toggleEmail(this)">
+              <div class="em-av" style="background:#5a1010">MA</div>
+              <div>
+                <div class="em-from">Metro Authority — Client <span class="em-new">New</span></div>
+                <div class="em-prev">⚠ PENALTY NOTICE: Mobilisation Delay — Clause 12.4</div>
+              </div>
+              <div class="em-time">07:30</div><span class="em-arr">▼</span>
+            </div>
+            <div class="em-body open">
+              <p>Dear SYSTRA, as per Clause 12.4 of our PMC Agreement, failure to deploy a verified Lead Structural Engineer by Day 5 will result in liquidated damages of <strong>£12,500 per day.</strong> Please confirm mobilisation status by return.</p>
+              <div class="em-sig">Director of Infrastructure · Metro Authority</div>
+            </div>
+          </div>
+
+          <!-- Email 2 — appears after 4 s -->
+          <div class="em-typing" id="ty1-2"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card u" id="em1-2">
+            <div class="em-head" onclick="toggleEmail(this)">
+              <div class="em-av" style="background:var(--teal-mid)">JO</div>
+              <div>
+                <div class="em-from">James Okafor — HR Manager, SYSTRA <span class="em-new">New</span></div>
+                <div class="em-prev">Mr. X — CV attached, verification still in progress</div>
+              </div>
+              <div class="em-time">08:47</div><span class="em-arr">▼</span>
+            </div>
+            <div class="em-body">
+              <p>Hi team — Mr. X's CV is attached. Highlights: B.Eng Civil Engineering (National Engineering College, 2011), 10 years on metro/rail projects including AB Group Ltd. Background verification is still in progress — awaiting responses from the university registrar and AB Group HR.</p>
+              <div class="em-att">📎 CV_MrX_LeadStructuralEngineer.pdf</div>
+              <div class="em-sig">James Okafor · HR Manager · SYSTRA</div>
+            </div>
+          </div>
+
+          <!-- Email 3 — appears after 8 s -->
+          <div class="em-typing" id="ty1-3"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card r" id="em1-3">
             <div class="em-head" onclick="toggleEmail(this)">
               <div class="em-av" style="background:var(--red)">SC</div>
               <div>
-                <div class="em-from">Sarah Chen — Project Director, SYSTRA</div>
+                <div class="em-from">Sarah Chen — Project Director, SYSTRA <span class="em-new">New</span></div>
                 <div class="em-prev">URGENT: Mr. X must be onboarded within two days</div>
               </div>
-              <div class="em-time">09:14</div>
-              <span class="em-arr">▼</span>
+              <div class="em-time">09:14</div><span class="em-arr">▼</span>
             </div>
-            <div class="em-body open">
-              <p>Team, the Metro Authority penalty clock is running. Mr. X's CV is outstanding — Civil Engineering degree, 10+ years on metro projects, strong references. The Project Director wants him onboarded <strong>within two days.</strong></p>
-              <p>Background verification is still pending but I need your decision now. Do we proceed?</p>
-              <div class="em-att">📎 CV_MrX_LeadStructuralEngineer.pdf</div>
+            <div class="em-body">
+              <p>Team — the Project Director has reviewed Mr. X's CV and is very impressed. He wants him onboarded <strong>within two days.</strong> I understand verification is still pending but the penalty exposure is significant and the client will not wait. I need your decision now.</p>
               <div class="em-sig">Sarah Chen · Project Director, Metro PMC · SYSTRA</div>
             </div>
           </div>
@@ -588,28 +468,26 @@ html, body {
 
         <div class="ctx-box">
           <div class="ctx-lbl">📋 Your Situation</div>
-          SYSTRA is PMC on a major Metro project. Mr. X has applied for Lead Structural Engineer with an impressive CV — but background verification is not yet complete. The client is threatening penalties for delay. How do you proceed?
+          Three emails have arrived this morning. The client is threatening penalties, HR says verification is still running, and the Project Director is demanding a fast onboarding decision. How do you proceed?
         </div>
 
-        <div class="q-zone">
+        <div class="q-zone q-locked" id="qz1">
           <div class="q-text">❓ How do you proceed?</div>
           <div class="opts" id="o1">
             <button class="opt-btn" onclick="choose(1,'A','poor')"    id="s1A"><div class="opt-l">A</div><div class="opt-t">Approve onboarding immediately — the CV looks excellent and the timeline is critical.</div></button>
             <button class="opt-btn" onclick="choose(1,'B','correct')" id="s1B"><div class="opt-l">B</div><div class="opt-t">Complete structured background verification — degree, references, professional body — before any offer is made.</div></button>
-            <button class="opt-btn" onclick="choose(1,'C','risky')"   id="s1C"><div class="opt-l">C</div><div class="opt-t">Ask candidate to start provisionally while checks are run in parallel.</div></button>
+            <button class="opt-btn" onclick="choose(1,'C','risky')"   id="s1C"><div class="opt-l">C</div><div class="opt-t">Ask the candidate to start provisionally while checks run in parallel.</div></button>
           </div>
         </div>
 
-        <div class="debrief" id="d1">
-          <div class="db-hdr"><span class="di"></span><span id="d1t"></span></div>
-          <div class="db-body"><span id="d1b"></span><div class="db-lesson" id="d1l"></div></div>
-        </div>
+        <div class="debrief" id="d1"><div class="db-hdr"><span class="di"></span><span id="d1t"></span></div><div class="db-body"><span id="d1b"></span><div class="db-lesson" id="d1l"></div></div></div>
         <div class="cont-row"><button class="cont-btn" id="c1" disabled onclick="goNext(1)">Continue to Scene 2 →</button></div>
       </div>
 
-      <!-- ═══════════════════════════════════
+      <!-- ═══════════════════════════════════════════
            SCENE 2 — RED FLAGS EMERGE
-      ═══════════════════════════════════ -->
+           Emails: 11:22 → 11:45
+      ═══════════════════════════════════════════ -->
       <div class="scene" id="scene-2">
         <div class="sc-hdr">
           <div class="hdr-icon">🚩</div>
@@ -620,56 +498,69 @@ html, body {
           </div>
           <div class="hdr-pts"><div class="hdr-pts-lbl">Score</div><div class="hdr-pts-val" id="sc2">—</div></div>
         </div>
-
         <div class="alert danger">
           <div class="alert-icon">🚨</div>
-          <div><strong>Verification Failure</strong>No degree record found. Employment history unconfirmed. Reference numbers go to unregistered voicemail boxes.</div>
+          <div><strong>Verification Failure</strong>No degree record found. Employment history unconfirmed. Reference numbers connect to unregistered voicemail boxes.</div>
         </div>
 
         <div class="email-wrap">
-          <div class="email-lbl">📬 Key Email</div>
-          <div class="email-card r">
+          <div class="email-lbl">📬 Incoming Emails</div>
+
+          <div class="em-typing show" id="ty2-1"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card r" id="em2-1">
             <div class="em-head" onclick="toggleEmail(this)">
               <div class="em-av" style="background:var(--red)">VT</div>
               <div>
-                <div class="em-from">Verification &amp; Compliance Team — SYSTRA</div>
+                <div class="em-from">Verification &amp; Compliance — SYSTRA <span class="em-new">New</span></div>
                 <div class="em-prev">🚨 URGENT: All verification checks have failed — Mr. X</div>
               </div>
-              <div class="em-time">11:22</div>
-              <span class="em-arr">▼</span>
+              <div class="em-time">11:22</div><span class="em-arr">▼</span>
             </div>
             <div class="em-body open">
-              <p>The National Engineering College confirms <strong>no record of Mr. X</strong> in their Civil Engineering course for the years claimed. AB Group HR states <strong>he was never on their payroll.</strong> Both reference numbers connect to unregistered voicemail boxes.</p>
-              <p>This is a strong indicator of CV fraud. The Project Director is still pushing for onboarding. What is your instruction?</p>
+              <p>The National Engineering College confirms <strong>no record of Mr. X</strong> in their Civil Engineering course for the years claimed (2007–2011). AB Group HR states <strong>he was never on their payroll.</strong> Both reference numbers connect to unregistered voicemail boxes. This requires immediate escalation — do not proceed with engagement.</p>
               <div class="em-sig">Verification &amp; Compliance Team · SYSTRA</div>
+            </div>
+          </div>
+
+          <div class="em-typing" id="ty2-2"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card u" id="em2-2">
+            <div class="em-head" onclick="toggleEmail(this)">
+              <div class="em-av" style="background:var(--teal)">SC</div>
+              <div>
+                <div class="em-from">Sarah Chen — Project Director, SYSTRA <span class="em-new">New</span></div>
+                <div class="em-prev">RE: Mr. X — could this be a database error?</div>
+              </div>
+              <div class="em-time">11:45</div><span class="em-arr">▼</span>
+            </div>
+            <div class="em-body">
+              <p>The Project Director has met Mr. X and remains impressed. His view: <em>"Could this be a database error at the university? Perhaps we give him 48 hours to bring in original documents?"</em> The penalty clock is still running. What is your instruction?</p>
+              <div class="em-sig">Sarah Chen · Project Director · SYSTRA</div>
             </div>
           </div>
         </div>
 
         <div class="ctx-box">
           <div class="ctx-lbl">📋 Your Situation</div>
-          Verification has failed on degree, employment, and references. All three checks have returned negative results. The Project Director still wants Mr. X to start. What do you do?
+          Verification has failed on degree, employment, and references — all three checks. The Project Director is still pushing for onboarding despite the findings. What do you do?
         </div>
 
-        <div class="q-zone">
+        <div class="q-zone q-locked" id="qz2">
           <div class="q-text">❓ What do you do?</div>
           <div class="opts" id="o2">
-            <button class="opt-btn" onclick="choose(2,'A','risky')"   id="s2A"><div class="opt-l">A</div><div class="opt-t">Confront Mr. X directly with the findings before escalating.</div></button>
-            <button class="opt-btn" onclick="choose(2,'B','correct')" id="s2B"><div class="opt-l">B</div><div class="opt-t">Immediately escalate to PMC Project Director and Legal + Ethics &amp; Compliance with a formal written report.</div></button>
+            <button class="opt-btn" onclick="choose(2,'A','risky')"   id="s2A"><div class="opt-l">A</div><div class="opt-t">Confront Mr. X directly with the findings before escalating internally.</div></button>
+            <button class="opt-btn" onclick="choose(2,'B','correct')" id="s2B"><div class="opt-l">B</div><div class="opt-t">Immediately escalate to PMC Project Director and Legal + Internal Control with a formal written report.</div></button>
             <button class="opt-btn" onclick="choose(2,'C','poor')"    id="s2C"><div class="opt-l">C</div><div class="opt-t">Give the candidate 48 hours to produce original certificates — this could be an administrative error.</div></button>
           </div>
         </div>
 
-        <div class="debrief" id="d2">
-          <div class="db-hdr"><span class="di"></span><span id="d2t"></span></div>
-          <div class="db-body"><span id="d2b"></span><div class="db-lesson" id="d2l"></div></div>
-        </div>
+        <div class="debrief" id="d2"><div class="db-hdr"><span class="di"></span><span id="d2t"></span></div><div class="db-body"><span id="d2b"></span><div class="db-lesson" id="d2l"></div></div></div>
         <div class="cont-row"><button class="cont-btn" id="c2" disabled onclick="goNext(2)">Continue to Scene 3 →</button></div>
       </div>
 
-      <!-- ═══════════════════════════════════
+      <!-- ═══════════════════════════════════════════
            SCENE 3 — HE'S ALREADY WORKING
-      ═══════════════════════════════════ -->
+           Emails: 14:07 → 14:15
+      ═══════════════════════════════════════════ -->
       <div class="scene" id="scene-3">
         <div class="sc-hdr">
           <div class="hdr-icon">⚠️</div>
@@ -680,38 +571,53 @@ html, body {
           </div>
           <div class="hdr-pts"><div class="hdr-pts-lbl">Score</div><div class="hdr-pts-val" id="sc3">—</div></div>
         </div>
-
         <div class="alert danger">
           <div class="alert-icon">🚨</div>
-          <div><strong>Critical Safety Alert</strong>Mr. X was onboarded 3 weeks ago by a different coordinator. He has signed off tunnel column designs — a peer engineer flags fundamental load calculation errors. Construction has begun.</div>
+          <div><strong>Critical Safety Alert</strong>Mr. X was onboarded 3 weeks ago by a different coordinator and has been signing off structural designs. A peer flags fundamental errors. Construction is already underway.</div>
         </div>
 
         <div class="email-wrap">
-          <div class="email-lbl">📬 Key Email</div>
-          <div class="email-card r">
+          <div class="email-lbl">📬 Incoming Emails</div>
+
+          <div class="em-typing show" id="ty3-1"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card r" id="em3-1">
             <div class="em-head" onclick="toggleEmail(this)">
               <div class="em-av" style="background:var(--orange)">AP</div>
               <div>
-                <div class="em-from">Amir Patel MEng — Senior Structural Engineer, SYSTRA</div>
+                <div class="em-from">Amir Patel MEng — Senior Structural Engineer <span class="em-new">New</span></div>
                 <div class="em-prev">🚨 URGENT: Critical design errors — Section 4 tunnel columns</div>
               </div>
-              <div class="em-time">14:07</div>
-              <span class="em-arr">▼</span>
+              <div class="em-time">14:07</div><span class="em-arr">▼</span>
             </div>
             <div class="em-body open">
-              <p>I have reviewed the tunnel column design pack signed off by Mr. X. The <strong>load specifications are fundamentally undersized</strong> for the expected metro loads. This is not a minor discrepancy.</p>
-              <p>Construction on Section 4 has already begun using these specifications. This is a public safety issue and requires an immediate work stoppage. I am formally flagging this now.</p>
+              <p>I have reviewed the tunnel column design pack signed off by Mr. X. The <strong>load specifications are fundamentally undersized</strong> for the expected metro loads. Construction on Section 4 has already commenced using these specifications. This is a public safety issue — I am formally flagging this and requesting an immediate work stoppage.</p>
               <div class="em-sig">Amir Patel, MEng · Senior Structural Engineer · SYSTRA</div>
+            </div>
+          </div>
+
+          <div class="em-typing" id="ty3-2"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card u" id="em3-2">
+            <div class="em-head" onclick="toggleEmail(this)">
+              <div class="em-av" style="background:var(--teal-mid)">JO</div>
+              <div>
+                <div class="em-from">James Okafor — HR Manager, SYSTRA <span class="em-new">New</span></div>
+                <div class="em-prev">RE: Mr. X — onboarded 3 weeks ago by different coordinator</div>
+              </div>
+              <div class="em-time">14:15</div><span class="em-arr">▼</span>
+            </div>
+            <div class="em-body">
+              <p>I have just discovered that Mr. X was onboarded three weeks ago by a different HR coordinator while I was on annual leave. This was processed without flagging the pending verification as a blocking item. He has been acting as Lead Structural Engineer since then. I sincerely apologise — this should not have happened.</p>
+              <div class="em-sig">James Okafor · HR Manager · SYSTRA</div>
             </div>
           </div>
         </div>
 
         <div class="ctx-box">
           <div class="ctx-lbl">📋 Your Situation</div>
-          An unverified engineer has been signing off safety-critical designs for three weeks. A qualified peer has identified fundamental structural errors. Construction is already underway. What is your immediate response?
+          An unverified engineer has been signing off safety-critical designs for three weeks. A qualified peer has identified fundamental structural errors and construction is already underway. What is your immediate response?
         </div>
 
-        <div class="q-zone">
+        <div class="q-zone q-locked" id="qz3">
           <div class="q-text">❓ What is your immediate response?</div>
           <div class="opts" id="o3">
             <button class="opt-btn" onclick="choose(3,'A','correct')" id="s3A"><div class="opt-l">A</div><div class="opt-t">Suspend Mr. X and issue a work stoppage on all affected sections pending an independent structural review.</div></button>
@@ -720,76 +626,87 @@ html, body {
           </div>
         </div>
 
-        <div class="debrief" id="d3">
-          <div class="db-hdr"><span class="di"></span><span id="d3t"></span></div>
-          <div class="db-body"><span id="d3b"></span><div class="db-lesson" id="d3l"></div></div>
-        </div>
+        <div class="debrief" id="d3"><div class="db-hdr"><span class="di"></span><span id="d3t"></span></div><div class="db-body"><span id="d3b"></span><div class="db-lesson" id="d3l"></div></div></div>
         <div class="cont-row"><button class="cont-btn" id="c3" disabled onclick="goNext(3)">Continue to Scene 4 →</button></div>
       </div>
 
-      <!-- ═══════════════════════════════════
+      <!-- ═══════════════════════════════════════════
            SCENE 4 — TELLING THE CLIENT
-      ═══════════════════════════════════ -->
+           Emails: 15:30 → 15:45
+      ═══════════════════════════════════════════ -->
       <div class="scene" id="scene-4">
         <div class="sc-hdr">
           <div class="hdr-icon">📢</div>
           <div class="hdr-meta">
             <div class="hdr-badge">Scene 4 of 5</div>
             <div class="hdr-title">Telling the Client</div>
-            <div class="hdr-sub">The Metro Authority demands a full account within 4 hours</div>
+            <div class="hdr-sub">The Metro Authority demands a full account — 4-hour deadline</div>
           </div>
           <div class="hdr-pts"><div class="hdr-pts-lbl">Score</div><div class="hdr-pts-val" id="sc4">—</div></div>
         </div>
-
         <div class="alert warn">
           <div class="alert-icon">📋</div>
-          <div><strong>Client Response Required</strong>Works stopped. Independent review initiated. The Metro Authority has formally requested an explanation — what happened, who is responsible, what the risk is, and what SYSTRA is doing.</div>
+          <div><strong>Client Response Required</strong>Works stopped. Independent review initiated. The Metro Authority has issued a formal 4-hour deadline for a full explanation.</div>
         </div>
 
         <div class="email-wrap">
-          <div class="email-lbl">📬 Key Email</div>
-          <div class="email-card r">
+          <div class="email-lbl">📬 Incoming Emails</div>
+
+          <div class="em-typing show" id="ty4-1"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card r" id="em4-1">
             <div class="em-head" onclick="toggleEmail(this)">
-              <div class="em-av" style="background:#5a1010">MA</div>
+              <div class="em-av" style="background:#5a1010">DI</div>
               <div>
-                <div class="em-from">Metro Authority — Director of Infrastructure</div>
-                <div class="em-prev">URGENT: Formal explanation required — 4-hour deadline</div>
+                <div class="em-from">Metro Authority — Director of Infrastructure <span class="em-new">New</span></div>
+                <div class="em-prev">URGENT: Formal explanation required — Section 4 stoppage</div>
               </div>
-              <div class="em-time">15:30</div>
-              <span class="em-arr">▼</span>
+              <div class="em-time">15:30</div><span class="em-arr">▼</span>
             </div>
             <div class="em-body open">
-              <p>We have been notified of a work stoppage on Section 4. As your client, we require a formal response: <strong>(1)</strong> what happened, <strong>(2)</strong> who is responsible, <strong>(3)</strong> the safety risk, and <strong>(4)</strong> SYSTRA's remediation plan.</p>
-              <p>This is a matter of public concern. We expect a full response within 4 hours. How do you respond?</p>
+              <p>We require a formal response: <strong>(1)</strong> what happened and why, <strong>(2)</strong> who is responsible, <strong>(3)</strong> the safety risk, and <strong>(4)</strong> SYSTRA's remediation plan. This is a matter of public concern. We expect a full response within 4 hours.</p>
               <div class="em-sig">Director of Infrastructure · Metro Authority</div>
+            </div>
+          </div>
+
+          <div class="em-typing" id="ty4-2"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card u" id="em4-2">
+            <div class="em-head" onclick="toggleEmail(this)">
+              <div class="em-av" style="background:var(--teal)">SC</div>
+              <div>
+                <div class="em-from">Sarah Chen — Project Director, SYSTRA <span class="em-new">New</span></div>
+                <div class="em-prev">RE: Client response — Legal is nervous, what do we say?</div>
+              </div>
+              <div class="em-time">15:45</div><span class="em-arr">▼</span>
+            </div>
+            <div class="em-body">
+              <p>Legal is nervous about full disclosure at this stage. Option 1: say a "personnel matter" has been identified and resolved, works resume shortly. Option 2: wait for the full independent review before saying anything substantive — give the client the complete picture at once. Your call.</p>
+              <div class="em-sig">Sarah Chen · Project Director · SYSTRA</div>
             </div>
           </div>
         </div>
 
         <div class="ctx-box">
           <div class="ctx-lbl">📋 Your Situation</div>
-          Works are stopped and an independent review is underway. The Metro Authority has issued a formal 4-hour deadline for a full explanation. Legal is nervous about disclosure. How do you frame your response?
+          Works are stopped and an independent review is underway. The Metro Authority wants answers in 4 hours. Legal is cautious. How do you frame the client communication?
         </div>
 
-        <div class="q-zone">
+        <div class="q-zone q-locked" id="qz4">
           <div class="q-text">❓ How do you respond to the client?</div>
           <div class="opts" id="o4">
             <button class="opt-btn" onclick="choose(4,'A','correct')" id="s4A"><div class="opt-l">A</div><div class="opt-t">Issue a full transparent incident report — what happened, root cause, actions taken, and a remediation plan with timeline.</div></button>
             <button class="opt-btn" onclick="choose(4,'B','poor')"    id="s4B"><div class="opt-l">B</div><div class="opt-t">Brief summary only — a "personnel matter" has been resolved and works will resume shortly.</div></button>
-            <button class="opt-btn" onclick="choose(4,'C','risky')"   id="s4C"><div class="opt-l">C</div><div class="opt-t">Wait until the independent review is complete before saying anything — give the client the full picture at once.</div></button>
+            <button class="opt-btn" onclick="choose(4,'C','risky')"   id="s4C"><div class="opt-l">C</div><div class="opt-t">Wait until the independent review is complete before communicating — give the full picture at once.</div></button>
           </div>
         </div>
 
-        <div class="debrief" id="d4">
-          <div class="db-hdr"><span class="di"></span><span id="d4t"></span></div>
-          <div class="db-body"><span id="d4b"></span><div class="db-lesson" id="d4l"></div></div>
-        </div>
+        <div class="debrief" id="d4"><div class="db-hdr"><span class="di"></span><span id="d4t"></span></div><div class="db-body"><span id="d4b"></span><div class="db-lesson" id="d4l"></div></div></div>
         <div class="cont-row"><button class="cont-btn" id="c4" disabled onclick="goNext(4)">Continue to Scene 5 →</button></div>
       </div>
 
-      <!-- ═══════════════════════════════════
+      <!-- ═══════════════════════════════════════════
            SCENE 5 — BUILDING SAFEGUARDS
-      ═══════════════════════════════════ -->
+           Single email (positive outcome)
+      ═══════════════════════════════════════════ -->
       <div class="scene" id="scene-5">
         <div class="sc-hdr">
           <div class="hdr-icon">🛡️</div>
@@ -800,27 +717,26 @@ html, body {
           </div>
           <div class="hdr-pts"><div class="hdr-pts-lbl">Score</div><div class="hdr-pts-val" id="sc5">—</div></div>
         </div>
-
         <div class="alert ok">
           <div class="alert-icon">✅</div>
           <div><strong>Outcome</strong>Independent review confirmed non-compliant designs — but no physical damage occurred. Works were stopped in time. Now prevent this from ever happening again.</div>
         </div>
 
         <div class="email-wrap">
-          <div class="email-lbl">📬 Key Email</div>
-          <div class="email-card g">
+          <div class="email-lbl">📬 Incoming Email</div>
+
+          <div class="em-typing show" id="ty5-1"><div class="typing-dots"><span></span><span></span><span></span></div>New email arriving…</div>
+          <div class="em-card g" id="em5-1">
             <div class="em-head" onclick="toggleEmail(this)">
               <div class="em-av" style="background:var(--green)">MA</div>
               <div>
-                <div class="em-from">Metro Authority — Director of Infrastructure</div>
+                <div class="em-from">Metro Authority — Director of Infrastructure <span class="em-new">New</span></div>
                 <div class="em-prev">RE: CV Fraud Prevention Protocol — formal requirement</div>
               </div>
-              <div class="em-time">10:00</div>
-              <span class="em-arr">▼</span>
+              <div class="em-time">10:00</div><span class="em-arr">▼</span>
             </div>
             <div class="em-body open">
-              <p>We are relieved no physical harm resulted. However, as a condition of continuing our PMC engagement, SYSTRA must implement a comprehensive CV Fraud Prevention Protocol across all future exposed-position recruitment.</p>
-              <p>Which approach will you implement?</p>
+              <p>We are relieved no physical harm resulted from this incident. However, as a condition of continuing our PMC engagement, SYSTRA must implement a comprehensive CV Fraud Prevention Protocol across all future exposed-position recruitment. Which approach will you adopt?</p>
               <div class="em-sig">Director of Infrastructure · Metro Authority</div>
             </div>
           </div>
@@ -828,22 +744,19 @@ html, body {
 
         <div class="ctx-box">
           <div class="ctx-lbl">📋 Your Situation</div>
-          The Metro Authority requires SYSTRA to present a CV Fraud Prevention Protocol as a condition of continued engagement. Which approach represents the strongest, most comprehensive safeguard?
+          The Metro Authority requires a CV Fraud Prevention Protocol as a condition of continued engagement. Which approach represents the strongest, most comprehensive safeguard?
         </div>
 
-        <div class="q-zone">
+        <div class="q-zone q-locked" id="qz5">
           <div class="q-text">❓ Which prevention protocol do you recommend?</div>
           <div class="opts" id="o5">
-            <button class="opt-btn" onclick="choose(5,'A','correct')" id="s5A"><div class="opt-l">A</div><div class="opt-t">Mandatory third-party verification for all exposed positions (per SYSTRA's Ethics Rule, HR Operations Group) before any offer is made.</div></button>
+            <button class="opt-btn" onclick="choose(5,'A','correct')" id="s5A"><div class="opt-l">A</div><div class="opt-t">Mandatory third-party verification for all exposed positions (per SYSTRA's Internal Control framework) before any offer is made.</div></button>
             <button class="opt-btn" onclick="choose(5,'B','poor')"    id="s5B"><div class="opt-l">B</div><div class="opt-t">Require all candidates to sign a declaration that their CV is truthful — a strong deterrent with legal value.</div></button>
             <button class="opt-btn" onclick="choose(5,'C','risky')"   id="s5C"><div class="opt-l">C</div><div class="opt-t">Use LinkedIn and Google searches to verify employment history — faster and more cost-effective.</div></button>
           </div>
         </div>
 
-        <div class="debrief" id="d5">
-          <div class="db-hdr"><span class="di"></span><span id="d5t"></span></div>
-          <div class="db-body"><span id="d5b"></span><div class="db-lesson" id="d5l"></div></div>
-        </div>
+        <div class="debrief" id="d5"><div class="db-hdr"><span class="di"></span><span id="d5t"></span></div><div class="db-body"><span id="d5b"></span><div class="db-lesson" id="d5l"></div></div></div>
         <div class="cont-row"><button class="cont-btn" id="c5" disabled onclick="showResults()">📊 View My Results →</button></div>
       </div>
 
@@ -852,57 +765,118 @@ html, body {
 </div><!-- /app -->
 
 <script>
-// ══════════════════════════════════════
-// DATA
-// ══════════════════════════════════════
+/* ══════════════════════════════════════
+   SCENE DATA
+══════════════════════════════════════ */
 const D = {
-  1:{A:{t:'poor',  h:'❌ Poor Choice',  b:'Placing an unverified person on a live safety-critical project exposes the project immediately. Timeline pressure is the fraudster\'s primary weapon — they exploit urgency to bypass controls.',   l:'<strong>Key Lesson:</strong> Never let commercial pressure override verification. The cost of fraud always exceeds the cost of a brief delay.'},
-     B:{t:'correct',h:'✅ Best Choice',  b:'Fraud is caught before any engagement. Verification for exposed positions is non-negotiable under SYSTRA\'s Ethics Rules, regardless of commercial pressure.',                                     l:'<strong>Key Lesson:</strong> Structured background verification — degree, references, professional body — is your first and strongest line of defence.'},
-     C:{t:'risky',  h:'⚠ Risky Choice', b:'An unverified person begins making technical decisions immediately. Stopping works mid-stream is far more costly — technically, commercially, and reputationally — than a brief delay at offer stage.',l:'<strong>Key Lesson:</strong> Provisional engagement with parallel checks is a false economy. Verification must precede engagement on exposed roles.'}},
-  2:{A:{t:'risky',  h:'⚠ Risky Choice', b:'Direct confrontation compromises the investigation. The candidate gains time to prepare counter-narratives or destroy evidence before Legal can act.',                                              l:'<strong>Key Lesson:</strong> Never confront a fraud suspect before escalating to Legal and Ethics & Compliance. Evidence protection comes first.'},
-     B:{t:'correct',h:'✅ Best Choice',  b:'Evidence is protected and the legal process followed correctly. Ethics & Compliance and Legal can now lead with a full written record.',                                                            l:'<strong>Key Lesson:</strong> Once verification fails, this is a legal and compliance matter — not an HR conversation. Escalate formally, in writing, immediately.'},
-     C:{t:'poor',   h:'❌ Poor Choice',  b:'Giving the candidate time to "explain" creates a window for evidence destruction — forged documents, fabricated confirmations, coached referees.',                                                  l:'<strong>Key Lesson:</strong> There is no innocent explanation for a degree that does not exist. Delay at this stage is dangerous.'}},
-  3:{A:{t:'correct',h:'✅ Best Choice',  b:'Safety protected, liability limited. Suspension and work stoppage is the correct response. HR termination and technical safety review must run in parallel — not in sequence.',                    l:'<strong>Key Lesson:</strong> When public safety is at risk, a work stoppage is the legally and ethically required response — not a disruption.'},
-     B:{t:'poor',   h:'❌ Poor Choice',  b:'Sequencing termination before the design review leaves a dangerous gap. Construction continues on potentially unsafe structures while HR completes its process.',                                    l:'<strong>Key Lesson:</strong> HR process and technical safety review must run in parallel. Safety always takes priority over administrative procedure.'},
-     C:{t:'risky',  h:'⚠ Risky Choice', b:'Concealing a safety concern from the client violates SYSTRA\'s duty of care and contractual obligations as PMC. If harm results, liability is dramatically compounded.',                           l:'<strong>Key Lesson:</strong> A safety event cannot be managed quietly. Transparency with the client — however uncomfortable — is both the ethical and legal obligation.'}},
-  4:{A:{t:'correct',h:'✅ Best Choice',  b:'Trust maintained and legal protection secured. Full transparent disclosure — root cause, actions, and a clear remediation plan — is what the client and your duty of care requires.',              l:'<strong>Key Lesson:</strong> Transparency in a crisis builds long-term trust. Clients can forgive mistakes; they cannot forgive concealment.'},
-     B:{t:'poor',   h:'❌ Poor Choice',  b:'PMC obligation is breached. The client has an absolute right to full disclosure of any safety event. A vague "personnel matter" summary will be read as deliberate evasion.',                     l:'<strong>Key Lesson:</strong> As PMC, SYSTRA\'s role is to protect the client\'s interests — including from inadequate information about safety risks.'},
-     C:{t:'risky',  h:'⚠ Risky Choice', b:'Complete silence while the review runs creates suspicion and damages trust. A brief holding communication acknowledging the situation and confirming actions underway is far better than nothing.',  l:'<strong>Key Lesson:</strong> "We are reviewing — here is what we know and what we are doing" is always better than silence.'}},
-  5:{A:{t:'correct',h:'✅ Best Choice',  b:'Fraud is systematically prevented. Third-party verification removes internal bias and catches false credentials that social checks cannot. This is SYSTRA\'s stated standard for exposed positions.',l:'<strong>Key Lesson:</strong> SYSTRA\'s Ethics Rule mandates third-party verification for exposed positions. This is not optional — it is the standard that protects projects, people, and public safety.'},
-     B:{t:'poor',   h:'❌ Poor Choice',  b:'A declaration is a deterrent only — fraudsters will sign anything. Legal value exists only after fraud is proven, when the damage is already done.',                                                l:'<strong>Key Lesson:</strong> Paper declarations prevent nothing. Prevention requires verification, not promises.'},
-     C:{t:'risky',  h:'⚠ Risky Choice', b:'Social profiles are easily fabricated. LinkedIn history cannot replace formal institutional verification for safety-critical roles — this approach would not have caught Mr. X.',                   l:'<strong>Key Lesson:</strong> For exposed positions, only formal institutional verification — university registrars, official HR records, professional body checks — meets the required standard.'}}
+  1:{A:{t:'poor',  h:'❌ Poor Choice',  b:'Placing an unverified person on a live safety-critical project immediately exposes the project. Timeline pressure is the fraudster\'s primary weapon — they rely on urgency to bypass controls.',   l:'<strong>Key Lesson:</strong> Never let commercial pressure override verification. The cost of fraud always exceeds the cost of a brief delay.'},
+     B:{t:'correct',h:'✅ Best Choice', b:'Fraud caught before any engagement. Under SYSTRA\'s Internal Control framework, verification for exposed positions is non-negotiable regardless of commercial pressure.',                             l:'<strong>Key Lesson:</strong> Structured background verification — degree, references, professional body — is your first and strongest line of defence.'},
+     C:{t:'risky',  h:'⚠ Risky Choice',b:'An unverified person begins making technical decisions immediately. Stopping works mid-stream is far more costly — technically, commercially, and reputationally — than a brief delay at offer stage.',l:'<strong>Key Lesson:</strong> Provisional engagement with parallel checks is a false economy. Verification must precede engagement on exposed roles.'}},
+  2:{A:{t:'risky',  h:'⚠ Risky Choice',b:'Direct confrontation compromises the investigation — the candidate gains time to prepare counter-narratives or destroy evidence before Legal can act.',                                              l:'<strong>Key Lesson:</strong> Never confront a fraud suspect before escalating to Legal and Internal Control. Evidence protection comes first.'},
+     B:{t:'correct',h:'✅ Best Choice', b:'Evidence is protected and the legal process followed correctly. Internal Control and Legal can now lead the process with a full written record.',                                                    l:'<strong>Key Lesson:</strong> Once verification fails, this is a legal and compliance matter — not an HR conversation. Escalate formally, in writing, immediately.'},
+     C:{t:'poor',   h:'❌ Poor Choice', b:'Giving the candidate time to "explain" creates a window for evidence destruction — forged certificates, fabricated confirmations, coached referees.',                                               l:'<strong>Key Lesson:</strong> There is no innocent explanation for a degree that does not exist. Delay at this stage is dangerous.'}},
+  3:{A:{t:'correct',h:'✅ Best Choice', b:'Safety protected, liability limited. Suspension and work stoppage is correct. HR termination and technical safety review must run in parallel — not in sequence.',                                  l:'<strong>Key Lesson:</strong> When public safety is at risk, a work stoppage is the legally and ethically required response — not a disruption.'},
+     B:{t:'poor',   h:'❌ Poor Choice', b:'Sequencing termination before the design review leaves a dangerous gap — construction continues on potentially unsafe structures while HR completes its process.',                                   l:'<strong>Key Lesson:</strong> HR process and technical safety review must run in parallel. Safety always takes priority over administrative procedure.'},
+     C:{t:'risky',  h:'⚠ Risky Choice',b:'Concealing a safety concern from the client violates SYSTRA\'s duty of care and contractual obligations as PMC. If harm results, liability is dramatically compounded.',                           l:'<strong>Key Lesson:</strong> A safety event cannot be managed quietly. Transparency with the client — however uncomfortable — is both the ethical and legal obligation.'}},
+  4:{A:{t:'correct',h:'✅ Best Choice', b:'Trust maintained and legal protection secured. Full transparent disclosure — root cause, actions taken, and a clear remediation plan — is what the client and your duty of care requires.',         l:'<strong>Key Lesson:</strong> Transparency in a crisis builds long-term trust. Clients can forgive mistakes; they cannot forgive concealment.'},
+     B:{t:'poor',   h:'❌ Poor Choice', b:'PMC obligation is breached. The client has an absolute right to full disclosure of any safety event. A vague "personnel matter" will be read as deliberate evasion.',                              l:'<strong>Key Lesson:</strong> As PMC, SYSTRA\'s role includes protecting the client from inadequate information about safety risks affecting their project.'},
+     C:{t:'risky',  h:'⚠ Risky Choice',b:'Complete silence creates suspicion and damages trust. A holding communication acknowledging the situation and confirming actions underway is far better than nothing.',                             l:'<strong>Key Lesson:</strong> "We are reviewing — here is what we know and what we are doing" is always better than silence.'}},
+  5:{A:{t:'correct',h:'✅ Best Choice', b:'Fraud systematically prevented. Third-party verification removes internal bias and catches false credentials that social checks cannot. This is the SYSTRA Internal Control standard for exposed positions.',l:'<strong>Key Lesson:</strong> SYSTRA\'s Internal Control framework mandates third-party verification for exposed positions. This is not optional — it protects projects, people, and public safety.'},
+     B:{t:'poor',   h:'❌ Poor Choice', b:'A declaration is a deterrent only — fraudsters will sign anything. Legal value exists only after fraud is proven, when the damage is already done.',                                                l:'<strong>Key Lesson:</strong> Paper declarations prevent nothing. Prevention requires verification, not promises.'},
+     C:{t:'risky',  h:'⚠ Risky Choice',b:'Social profiles are easily fabricated. LinkedIn cannot replace formal institutional verification for safety-critical roles — this approach would not have caught Mr. X.',                           l:'<strong>Key Lesson:</strong> For exposed positions, only formal institutional verification — university registrars, official HR records, professional body checks — meets the required standard.'}}
 };
 
-// ══════════════════════════════════════
-// STATE
-// ══════════════════════════════════════
-let soundOn=true, score=0, nC=0, nR=0, nP=0, unlocked=[0];
+/* ══════════════════════════════════════
+   EMAIL REVEAL SCHEDULE (seconds)
+   Scene → [email-id, delay, close typing after reveal]
+══════════════════════════════════════ */
+const REVEAL = {
+  1: [ ['em1-1','ty1-1',0], ['em1-2','ty1-2',4000], ['em1-3','ty1-3',8000] ],
+  2: [ ['em2-1','ty2-1',0], ['em2-2','ty2-2',5000] ],
+  3: [ ['em3-1','ty3-1',0], ['em3-2','ty3-2',5000] ],
+  4: [ ['em4-1','ty4-1',0], ['em4-2','ty4-2',5000] ],
+  5: [ ['em5-1','ty5-1',0] ]
+};
 
-// ══════════════════════════════════════
-// AUDIO
-// ══════════════════════════════════════
-let ctx=null;
-function ac(){if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();return ctx;}
-function t(f,d,type='sine',v=0.26,delay=0){
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+let soundOn=true, score=0, nC=0, nR=0, nP=0, unlocked=[0];
+let revealTimers=[];
+
+/* ══════════════════════════════════════
+   AUDIO
+══════════════════════════════════════ */
+let actx=null;
+function ac(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
+function tn(f,d,tp='sine',v=0.24,dl=0){
   if(!soundOn)return;
   try{const c=ac(),o=c.createOscillator(),g=c.createGain();
-  o.connect(g);g.connect(c.destination);o.type=type;
-  o.frequency.setValueAtTime(f,c.currentTime+delay);
-  g.gain.setValueAtTime(v,c.currentTime+delay);
-  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+delay+d);
-  o.start(c.currentTime+delay);o.stop(c.currentTime+delay+d+0.05);}catch(e){}
+  o.connect(g);g.connect(c.destination);o.type=tp;
+  o.frequency.setValueAtTime(f,c.currentTime+dl);
+  g.gain.setValueAtTime(v,c.currentTime+dl);
+  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dl+d);
+  o.start(c.currentTime+dl);o.stop(c.currentTime+dl+d+0.05);}catch(e){}
 }
-function sfxOk()  { t(523,.12);t(659,.12,'sine',.26,.13);t(784,.28,'sine',.3,.27); }
-function sfxRisk(){ t(440,.1,'triangle',.2);t(370,.22,'triangle',.2,.12); }
-function sfxBad() { t(220,.15,'sawtooth',.2);t(185,.3,'sawtooth',.2,.17); }
-function sfxClick(){ t(800,.05,'square',.1); }
-function sfxEmail(){ t(600,.07);t(720,.07,'sine',.13,.09); }
-function sfxFan() { [261,329,392,523].forEach((f,i)=>t(f,.2,'sine',.24,i*.1)); }
+function sfxOk()   { tn(523,.12);tn(659,.12,'sine',.24,.13);tn(784,.26,'sine',.28,.27); }
+function sfxRisk() { tn(440,.1,'triangle',.18);tn(370,.2,'triangle',.18,.12); }
+function sfxBad()  { tn(220,.14,'sawtooth',.18);tn(185,.28,'sawtooth',.18,.16); }
+function sfxClick(){ tn(800,.04,'square',.09); }
+function sfxEmail(){ tn(900,.06);tn(700,.06,'sine',.12,.07); }  /* "ping" for new email */
+function sfxFan()  { [261,329,392,523].forEach((f,i)=>tn(f,.18,'sine',.22,i*.1)); }
 function toggleSound(){ soundOn=!soundOn; document.getElementById('soundBtn').textContent=soundOn?'🔊 Sound':'🔇 Muted'; if(soundOn)sfxClick(); }
 
-// ══════════════════════════════════════
-// NAVIGATION
-// ══════════════════════════════════════
+/* ══════════════════════════════════════
+   EMAIL REVEAL ENGINE
+══════════════════════════════════════ */
+function revealEmails(sceneNum){
+  // clear any leftover timers from prev scene
+  revealTimers.forEach(t=>clearTimeout(t));
+  revealTimers=[];
+
+  const schedule = REVEAL[sceneNum] || [];
+  const total = schedule.length;
+
+  schedule.forEach(([cardId, typId, delay], idx) => {
+    const isLast = idx === total - 1;
+
+    // show typing indicator just before this card
+    if(delay > 0){
+      const preDelay = Math.max(0, delay - 1200);
+      const t0 = setTimeout(()=>{
+        const ty = document.getElementById(typId);
+        if(ty) ty.classList.add('show');
+      }, preDelay);
+      revealTimers.push(t0);
+    }
+
+    const t1 = setTimeout(()=>{
+      // hide typing indicator
+      const ty = document.getElementById(typId);
+      if(ty) ty.classList.remove('show');
+      // reveal card
+      const card = document.getElementById(cardId);
+      if(card){
+        card.classList.add('visible');
+        sfxEmail(); // ping sound on each new email
+        // auto-scroll to new card
+        setTimeout(()=> card.scrollIntoView({behavior:'smooth', block:'nearest'}), 100);
+      }
+      // if last email, unlock question zone
+      if(isLast){
+        setTimeout(()=>{
+          const qz = document.getElementById('qz'+sceneNum);
+          if(qz){ qz.classList.remove('q-locked'); qz.classList.add('unlocked'); }
+        }, 800);
+      }
+    }, delay);
+    revealTimers.push(t1);
+  });
+}
+
+/* ══════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════ */
 function showScreen(id){
   document.querySelectorAll('.screen,.scene').forEach(el=>el.classList.remove('show'));
   const el=document.getElementById(id); if(el) el.classList.add('show');
@@ -912,50 +886,46 @@ function setSB(id){
   document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
   const el=document.getElementById('nav-'+id); if(el) el.classList.add('active');
 }
-function setProgress(n){ document.getElementById('prog').style.width=(n==='r'?100:n/5*100)+'%'; }
+function setProgress(n){ document.getElementById('prog').style.width=(n==='r'?100:(n/5*100))+'%'; }
 function unlock(n){ if(!unlocked.includes(n)){unlocked.push(n); const el=document.getElementById('nav-'+n); if(el)el.classList.remove('locked');} }
 
 function navTo(n){
   if(!unlocked.includes(n)&&n!==0)return;
   sfxClick();
-  showScreen(n===0?'s-intro':'scene-'+n);
-  setSB(n); setProgress(n);
+  if(n===0){ showScreen('s-intro'); setSB(0); setProgress(0); return; }
+  showScreen('scene-'+n); setSB(n); setProgress(n);
+  revealEmails(n);
 }
-function startModule(){ sfxFan(); unlock(1); showScreen('scene-1'); setSB(1); setProgress(1); }
-function goNext(n){ sfxClick(); unlock(n+1); showScreen('scene-'+(n+1)); setSB(n+1); setProgress(n+1); }
 
-// ══════════════════════════════════════
-// GAME
-// ══════════════════════════════════════
+function startModule(){ sfxFan(); unlock(1); showScreen('scene-1'); setSB(1); setProgress(1); revealEmails(1); }
+function goNext(n){ sfxClick(); unlock(n+1); showScreen('scene-'+(n+1)); setSB(n+1); setProgress(n+1); revealEmails(n+1); }
+
+/* ══════════════════════════════════════
+   GAME
+══════════════════════════════════════ */
 function choose(scene,opt,type){
   const data=D[scene][opt]; if(!data)return;
-  // disable
   document.getElementById('o'+scene).querySelectorAll('.opt-btn').forEach(b=>b.disabled=true);
-  // style chosen
   const btn=document.getElementById('s'+scene+opt);
   btn.classList.add(type);
   const badge=document.createElement('div');
   badge.className='opt-badge '+(type==='correct'?'b-c':type==='risky'?'b-r':'b-p');
   badge.textContent=type==='correct'?'✅ Best':type==='risky'?'⚠ Risky':'❌ Poor';
   btn.appendChild(badge);
-  // score
   const pts=type==='correct'?10:type==='risky'?4:0;
   score+=pts;
   if(type==='correct'){nC++;sfxOk();}else if(type==='risky'){nR++;sfxRisk();}else{nP++;sfxBad();}
   document.getElementById('sideScore').textContent=score;
   document.getElementById('sc'+scene).textContent=pts+'/10';
-  // debrief
   const dp=document.getElementById('d'+scene);
   dp.className='debrief show '+type;
   dp.querySelector('.di').textContent=type==='correct'?'✅':type==='risky'?'⚠️':'❌';
   document.getElementById('d'+scene+'t').textContent=data.h;
   document.getElementById('d'+scene+'b').textContent=data.b;
   document.getElementById('d'+scene+'l').innerHTML=data.l;
-  // nav mark done
   const nv=document.getElementById('nav-'+scene); if(nv)nv.classList.add('done');
-  // enable continue
   document.getElementById('c'+scene).disabled=false;
-  setTimeout(()=>dp.scrollIntoView({behavior:'smooth',block:'nearest'}),280);
+  setTimeout(()=>dp.scrollIntoView({behavior:'smooth',block:'nearest'}),300);
 }
 
 function showResults(){
@@ -965,10 +935,10 @@ function showResults(){
   document.getElementById('cR').textContent=nR;
   document.getElementById('cP').textContent=nP;
   let ti,su;
-  if(score>=45){ti='🏆 Outstanding — Fraud Champion';su='Excellent. You consistently applied SYSTRA\'s verification standards under pressure. Your decisions protect projects, people, and public safety.';}
-  else if(score>=30){ti='👍 Good — Solid Judgement';su='Good awareness of fraud risks. Review the scenes where you scored lower to strengthen your real-world decision-making.';}
-  else if(score>=15){ti='⚠ Fair — Room to Improve';su='You identified some risks, but some decisions could expose the project to fraud or safety failures. Replay the module and study the debrief notes.';}
-  else{ti='❌ Needs Development';su='Several decisions would have led to serious safety and commercial consequences. Please review this module carefully — understanding these principles is essential for your role.';}
+  if(score>=45){ti='🏆 Outstanding — Fraud Champion';su='Excellent. You consistently applied SYSTRA\'s Internal Control standards under pressure. Your decisions protect projects, people, and public safety.';}
+  else if(score>=30){ti='👍 Good — Solid Judgement';su='Good awareness of fraud risks. Review the scenes where you scored lower to sharpen your real-world decision-making.';}
+  else if(score>=15){ti='⚠ Fair — Room to Improve';su='You identified some risks but some decisions could expose the project to fraud or safety failures. Replay the module and study the debrief notes carefully.';}
+  else{ti='❌ Needs Development';su='Several decisions would have led to serious safety and commercial consequences. Please review this module — understanding these principles is essential for your role.';}
   document.getElementById('rTitle').textContent=ti;
   document.getElementById('rSub').textContent=su;
   showScreen('s-results'); setSB('r'); setProgress('r');
@@ -976,31 +946,45 @@ function showResults(){
 
 function replay(){
   score=0;nC=0;nR=0;nP=0;unlocked=[0];
+  revealTimers.forEach(t=>clearTimeout(t)); revealTimers=[];
   document.getElementById('sideScore').textContent='0';
   for(let s=1;s<=5;s++){
+    // reset options
     const og=document.getElementById('o'+s);
     if(og) og.querySelectorAll('.opt-btn').forEach(b=>{b.disabled=false;b.className='opt-btn';const bg=b.querySelector('.opt-badge');if(bg)bg.remove();});
+    // reset debrief
     const dp=document.getElementById('d'+s); if(dp)dp.className='debrief';
+    // reset continue
     const cb=document.getElementById('c'+s); if(cb)cb.disabled=true;
+    // reset score
     const sc=document.getElementById('sc'+s); if(sc)sc.textContent='—';
+    // reset sidebar
     const nv=document.getElementById('nav-'+s); if(nv){nv.classList.remove('done','active');nv.classList.add('locked');}
+    // reset question lock
+    const qz=document.getElementById('qz'+s); if(qz){qz.classList.add('q-locked');qz.classList.remove('unlocked');}
+    // reset email cards — hide all, show first typing indicator
+    const schedule=REVEAL[s]||[];
+    schedule.forEach(([cardId,typId],idx)=>{
+      const card=document.getElementById(cardId); if(card)card.classList.remove('visible');
+      const ty=document.getElementById(typId); if(ty){ ty.classList.remove('show'); if(idx===0)ty.classList.add('show'); }
+    });
   }
   document.getElementById('prog').style.width='0%';
   showScreen('s-intro'); setSB(0); sfxClick();
 }
 
-// EMAIL TOGGLE
+/* ── EMAIL TOGGLE ── */
 function toggleEmail(h){
   const b=h.nextElementSibling, a=h.querySelector('.em-arr');
   if(b&&b.classList.contains('em-body')){
     const was=b.classList.contains('open');
     b.classList.toggle('open');
     if(a)a.classList.toggle('open',!was);
-    if(!was)sfxEmail();
+    if(!was)sfxClick();
   }
 }
 
-// INIT
+/* ── INIT ── */
 showScreen('s-intro'); setSB(0);
 </script>
 </body>
