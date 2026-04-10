@@ -305,9 +305,18 @@ html, body {
 .cont-btn:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 5px 14px rgba(210,35,40,.3); }
 .cont-btn:disabled { background: #c0c8cc; cursor: not-allowed; transform: none; box-shadow: none; }
 
-/* ── QUESTION locked until all emails shown ── */
-.q-locked { opacity: .4; pointer-events: none; transition: opacity .6s ease; }
-.q-locked.unlocked { opacity: 1; pointer-events: auto; }
+/* ── CONTEXT + QUESTION: hidden until all emails shown ── */
+.await-reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .7s ease, transform .7s ease;
+}
+.await-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
 </style>
 </head>
 <body>
@@ -424,7 +433,7 @@ html, body {
               </div>
               <div class="em-time">07:30</div><span class="em-arr">▼</span>
             </div>
-            <div class="em-body open">
+            <div class="em-body">
               <p>Dear SYSTRA, as per Clause 12.4 of our PMC Agreement, failure to deploy a verified Lead Structural Engineer by Day 5 will result in liquidated damages of <strong>£12,500 per day.</strong> Please confirm mobilisation status by return.</p>
               <div class="em-sig">Director of Infrastructure · Metro Authority</div>
             </div>
@@ -466,12 +475,12 @@ html, body {
           </div>
         </div>
 
-        <div class="ctx-box">
+        <div class="ctx-box await-reveal" id="ctx1">
           <div class="ctx-lbl">📋 Your Situation</div>
           Three emails have arrived this morning. The client is threatening penalties, HR says verification is still running, and the Project Director is demanding a fast onboarding decision. How do you proceed?
         </div>
 
-        <div class="q-zone q-locked" id="qz1">
+        <div class="q-zone await-reveal" id="qz1">
           <div class="q-text">❓ How do you proceed?</div>
           <div class="opts" id="o1">
             <button class="opt-btn" onclick="choose(1,'A','poor')"    id="s1A"><div class="opt-l">A</div><div class="opt-t">Approve onboarding immediately — the CV looks excellent and the timeline is critical.</div></button>
@@ -516,7 +525,7 @@ html, body {
               </div>
               <div class="em-time">11:22</div><span class="em-arr">▼</span>
             </div>
-            <div class="em-body open">
+            <div class="em-body">
               <p>The National Engineering College confirms <strong>no record of Mr. X</strong> in their Civil Engineering course for the years claimed (2007–2011). AB Group HR states <strong>he was never on their payroll.</strong> Both reference numbers connect to unregistered voicemail boxes. This requires immediate escalation — do not proceed with engagement.</p>
               <div class="em-sig">Verification &amp; Compliance Team · SYSTRA</div>
             </div>
@@ -539,12 +548,12 @@ html, body {
           </div>
         </div>
 
-        <div class="ctx-box">
+        <div class="ctx-box await-reveal" id="ctx2">
           <div class="ctx-lbl">📋 Your Situation</div>
           Verification has failed on degree, employment, and references — all three checks. The Project Director is still pushing for onboarding despite the findings. What do you do?
         </div>
 
-        <div class="q-zone q-locked" id="qz2">
+        <div class="q-zone await-reveal" id="qz2">
           <div class="q-text">❓ What do you do?</div>
           <div class="opts" id="o2">
             <button class="opt-btn" onclick="choose(2,'A','risky')"   id="s2A"><div class="opt-l">A</div><div class="opt-t">Confront Mr. X directly with the findings before escalating internally.</div></button>
@@ -589,7 +598,7 @@ html, body {
               </div>
               <div class="em-time">14:07</div><span class="em-arr">▼</span>
             </div>
-            <div class="em-body open">
+            <div class="em-body">
               <p>I have reviewed the tunnel column design pack signed off by Mr. X. The <strong>load specifications are fundamentally undersized</strong> for the expected metro loads. Construction on Section 4 has already commenced using these specifications. This is a public safety issue — I am formally flagging this and requesting an immediate work stoppage.</p>
               <div class="em-sig">Amir Patel, MEng · Senior Structural Engineer · SYSTRA</div>
             </div>
@@ -612,12 +621,12 @@ html, body {
           </div>
         </div>
 
-        <div class="ctx-box">
+        <div class="ctx-box await-reveal" id="ctx3">
           <div class="ctx-lbl">📋 Your Situation</div>
           An unverified engineer has been signing off safety-critical designs for three weeks. A qualified peer has identified fundamental structural errors and construction is already underway. What is your immediate response?
         </div>
 
-        <div class="q-zone q-locked" id="qz3">
+        <div class="q-zone await-reveal" id="qz3">
           <div class="q-text">❓ What is your immediate response?</div>
           <div class="opts" id="o3">
             <button class="opt-btn" onclick="choose(3,'A','correct')" id="s3A"><div class="opt-l">A</div><div class="opt-t">Suspend Mr. X and issue a work stoppage on all affected sections pending an independent structural review.</div></button>
@@ -662,7 +671,7 @@ html, body {
               </div>
               <div class="em-time">15:30</div><span class="em-arr">▼</span>
             </div>
-            <div class="em-body open">
+            <div class="em-body">
               <p>We require a formal response: <strong>(1)</strong> what happened and why, <strong>(2)</strong> who is responsible, <strong>(3)</strong> the safety risk, and <strong>(4)</strong> SYSTRA's remediation plan. This is a matter of public concern. We expect a full response within 4 hours.</p>
               <div class="em-sig">Director of Infrastructure · Metro Authority</div>
             </div>
@@ -685,12 +694,12 @@ html, body {
           </div>
         </div>
 
-        <div class="ctx-box">
+        <div class="ctx-box await-reveal" id="ctx4">
           <div class="ctx-lbl">📋 Your Situation</div>
           Works are stopped and an independent review is underway. The Metro Authority wants answers in 4 hours. Legal is cautious. How do you frame the client communication?
         </div>
 
-        <div class="q-zone q-locked" id="qz4">
+        <div class="q-zone await-reveal" id="qz4">
           <div class="q-text">❓ How do you respond to the client?</div>
           <div class="opts" id="o4">
             <button class="opt-btn" onclick="choose(4,'A','correct')" id="s4A"><div class="opt-l">A</div><div class="opt-t">Issue a full transparent incident report — what happened, root cause, actions taken, and a remediation plan with timeline.</div></button>
@@ -735,19 +744,19 @@ html, body {
               </div>
               <div class="em-time">10:00</div><span class="em-arr">▼</span>
             </div>
-            <div class="em-body open">
+            <div class="em-body">
               <p>We are relieved no physical harm resulted from this incident. However, as a condition of continuing our PMC engagement, SYSTRA must implement a comprehensive CV Fraud Prevention Protocol across all future exposed-position recruitment. Which approach will you adopt?</p>
               <div class="em-sig">Director of Infrastructure · Metro Authority</div>
             </div>
           </div>
         </div>
 
-        <div class="ctx-box">
+        <div class="ctx-box await-reveal" id="ctx5">
           <div class="ctx-lbl">📋 Your Situation</div>
           The Metro Authority requires a CV Fraud Prevention Protocol as a condition of continued engagement. Which approach represents the strongest, most comprehensive safeguard?
         </div>
 
-        <div class="q-zone q-locked" id="qz5">
+        <div class="q-zone await-reveal" id="qz5">
           <div class="q-text">❓ Which prevention protocol do you recommend?</div>
           <div class="opts" id="o5">
             <button class="opt-btn" onclick="choose(5,'A','correct')" id="s5A"><div class="opt-l">A</div><div class="opt-t">Mandatory third-party verification for all exposed positions (per SYSTRA's Internal Control framework) before any offer is made.</div></button>
@@ -862,12 +871,17 @@ function revealEmails(sceneNum){
         // auto-scroll to new card
         setTimeout(()=> card.scrollIntoView({behavior:'smooth', block:'nearest'}), 100);
       }
-      // if last email, unlock question zone
+      // if last email, reveal ctx-box + question zone together
       if(isLast){
         setTimeout(()=>{
-          const qz = document.getElementById('qz'+sceneNum);
-          if(qz){ qz.classList.remove('q-locked'); qz.classList.add('unlocked'); }
-        }, 800);
+          const ctx = document.getElementById('ctx'+sceneNum);
+          const qz  = document.getElementById('qz'+sceneNum);
+          if(ctx){ ctx.classList.add('revealed'); }
+          if(qz){  qz.classList.add('revealed');
+            // scroll so situation box comes into view
+            setTimeout(()=> ctx && ctx.scrollIntoView({behavior:'smooth', block:'nearest'}), 200);
+          }
+        }, 900);
       }
     }, delay);
     revealTimers.push(t1);
@@ -960,8 +974,9 @@ function replay(){
     const sc=document.getElementById('sc'+s); if(sc)sc.textContent='—';
     // reset sidebar
     const nv=document.getElementById('nav-'+s); if(nv){nv.classList.remove('done','active');nv.classList.add('locked');}
-    // reset question lock
-    const qz=document.getElementById('qz'+s); if(qz){qz.classList.add('q-locked');qz.classList.remove('unlocked');}
+    // reset question + context lock
+    const qz=document.getElementById('qz'+s); if(qz){qz.classList.remove('revealed');}
+    const cx=document.getElementById('ctx'+s); if(cx){cx.classList.remove('revealed');}
     // reset email cards — hide all, show first typing indicator
     const schedule=REVEAL[s]||[];
     schedule.forEach(([cardId,typId],idx)=>{
@@ -980,7 +995,12 @@ function toggleEmail(h){
     const was=b.classList.contains('open');
     b.classList.toggle('open');
     if(a)a.classList.toggle('open',!was);
-    if(!was)sfxClick();
+    if(!was){
+      sfxClick();
+      // remove "New" badge on first open — mark as read
+      const badge=h.querySelector('.em-new');
+      if(badge){ badge.style.transition='opacity .4s'; badge.style.opacity='0'; setTimeout(()=>badge.remove(),400); }
+    }
   }
 }
 
