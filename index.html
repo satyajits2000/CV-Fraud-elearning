@@ -318,141 +318,70 @@ html, body {
   pointer-events: auto;
 }
 
-/* ══════════════════════════════════════
-   MOBILE RESPONSIVE — hamburger + overlay
-══════════════════════════════════════ */
-
-/* Hamburger button — hidden on desktop */
+/* ══ MOBILE RESPONSIVE ══ */
 .hamburger {
   display: none;
   background: rgba(255,255,255,0.12);
   border: 1px solid rgba(255,255,255,0.2);
-  color: white;
-  width: 32px; height: 32px;
-  border-radius: 5px;
-  align-items: center; justify-content: center;
-  font-size: 16px;
-  cursor: pointer;
-  flex-shrink: 0;
+  color: white; width: 32px; height: 32px;
+  border-radius: 5px; align-items: center; justify-content: center;
+  font-size: 16px; cursor: pointer; flex-shrink: 0;
 }
-
-/* Sidebar overlay backdrop */
 .sidebar-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.45);
-  z-index: 200;
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45); z-index: 200;
 }
 .sidebar-overlay.open { display: block; }
 
 @media (max-width: 640px) {
-  /* Allow body to scroll on mobile */
   html, body { overflow: auto; height: auto; }
-
-  #app {
-    position: relative;
-    height: auto;
-    min-height: 100vh;
-    overflow: visible;
-  }
-
-  /* Show hamburger */
+  #app { position: relative; height: auto; min-height: 100vh; overflow: visible; }
   .hamburger { display: flex; }
-
-  /* Hide course text to save space on very small screens */
   .tb-course { font-size: 10px; }
-
-  /* Sidebar: slide in from left as overlay */
   .sidebar {
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    width: 230px;
-    z-index: 300;
-    transform: translateX(-100%);
-    transition: transform .28s ease;
-    overflow-y: auto;
-    box-shadow: 4px 0 20px rgba(0,0,0,0.25);
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 230px; z-index: 300;
+    transform: translateX(-100%); transition: transform .28s ease;
+    overflow-y: auto; box-shadow: 4px 0 20px rgba(0,0,0,0.25);
   }
   .sidebar.open { transform: translateX(0); }
-
-  /* Content takes full width */
   .body-wrap { display: block; overflow: visible; }
-
-  .content {
-    overflow: visible;
-    height: auto;
-    min-height: calc(100vh - 50px);
-  }
-
-  /* Screens and scenes flow naturally */
+  .content { overflow: visible; height: auto; min-height: calc(100vh - 50px); }
   .screen, .screen.show { display: block; }
   .screen.show { display: flex; flex-direction: column; }
-
   .scene { display: none; flex-direction: column; }
   .scene.show { display: flex; }
-
-  /* Intro screen */
-  #s-intro {
-    min-height: calc(100vh - 50px);
-    padding: 24px 18px;
-  }
-
-  /* Results screen */
-  #s-results {
-    min-height: calc(100vh - 50px);
-    padding: 24px 18px;
-  }
-
-  /* Scene header: stack icon+meta, keep pts badge */
-  .sc-hdr {
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px 14px;
-  }
+  #s-intro { min-height: calc(100vh - 50px); padding: 24px 18px; }
+  #s-results { min-height: calc(100vh - 50px); padding: 24px 18px; }
+  .sc-hdr { flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
   .hdr-icon { width: 36px; height: 36px; font-size: 18px; }
   .hdr-title { font-size: 15px; }
   .hdr-sub { font-size: 10.5px; }
   .hdr-pts { padding: 5px 10px; }
   .hdr-pts-val { font-size: 16px; }
-
-  /* Email thread */
   .email-wrap { padding: 8px 12px 4px; }
   .em-head { padding: 8px 10px; gap: 7px; }
   .em-av { width: 26px; height: 26px; font-size: 9px; }
   .em-from { font-size: 11px; }
   .em-prev { font-size: 9.5px; }
   .em-body { padding: 9px 11px; font-size: 12px; }
-
-  /* Context + question */
   .ctx-box { margin: 4px 12px 6px; font-size: 12px; padding: 8px 12px; }
   .q-zone { padding: 0 12px 10px; }
   .q-text { font-size: 12.5px; }
   .opt-btn { font-size: 12px; padding: 9px 10px; gap: 8px; }
   .opt-l { width: 24px; height: 24px; font-size: 11px; }
-
-  /* Debrief */
   .debrief { margin: 0 12px 10px; }
   .db-hdr { font-size: 12px; padding: 8px 12px; }
   .db-body { font-size: 12px; padding: 9px 12px; }
-
-  /* Continue button */
   .cont-row { padding: 2px 12px 14px; }
   .cont-btn { font-size: 12px; padding: 9px 18px; width: 100%; justify-content: center; }
-
-  /* Alert bar */
   .alert { font-size: 11.5px; padding: 7px 12px; }
-
-  /* Stats on intro */
   .i-stat { min-width: 72px; padding: 7px 10px; }
   .i-stat-n { font-size: 17px; }
   .i-title { font-size: 19px; }
   .i-sub { font-size: 12px; }
-
-  /* Results chips */
   .chip { padding: 7px 12px; min-width: 64px; }
   .chip span { font-size: 18px; }
-
-  /* Score ring */
   .r-ring { width: 100px; height: 100px; }
   .r-score { font-size: 28px; }
   .r-title { font-size: 17px; }
@@ -473,7 +402,6 @@ html, body {
     <div class="tb-course">Internal Control · CV Fraud Detection</div>
     <button class="tb-sound" id="soundBtn" onclick="toggleSound()">🔊 Sound</button>
   </div>
-  <!-- Sidebar overlay for mobile -->
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
   <div class="red-line"></div>
   <div class="prog-track"><div class="prog-fill" id="prog" style="width:0%"></div></div>
@@ -916,6 +844,145 @@ html, body {
   </div><!-- /body-wrap -->
 </div><!-- /app -->
 
+<!-- ═══ FIREBASE ═══ -->
+<script type="module">
+import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, set, get, onValue }
+                            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDQaDGAOslmVabYfMp7erAVDCzCXhAUj7c",
+  authDomain: "quality-quiz-5d8fa.firebaseapp.com",
+  databaseURL: "https://quality-quiz-5d8fa-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "quality-quiz-5d8fa",
+  storageBucket: "quality-quiz-5d8fa.firebasestorage.app",
+  messagingSenderId: "200263271557",
+  appId: "1:200263271557:web:24908b21ce8d7bb1a795ec"
+};
+
+let db, activeSessionId = null, participantRef = null;
+
+try {
+  const app = initializeApp(firebaseConfig, 'cv-fraud-module');
+  db = getDatabase(app);
+} catch(e) { console.warn('Firebase init failed:', e.message); }
+
+/* ── Find active session ── */
+window.fbFindActiveSession = async function() {
+  if (!db) return null;
+  try {
+    const snap = await get(ref(db, 'cv_fraud_sessions'));
+    if (!snap.exists()) return null;
+    const sessions = snap.val();
+    const active = Object.entries(sessions).find(([,s]) => s.status === 'active');
+    return active ? active[0] : null;
+  } catch(e) { console.warn('Firebase session lookup failed:', e); return null; }
+};
+
+/* ── Register participant at start ── */
+window.fbRegister = async function(name, entity, email) {
+  if (!db) return;
+  activeSessionId = await window.fbFindActiveSession();
+  if (!activeSessionId) {
+    console.warn('No active session found — data will not be saved.');
+    window._fbWarn = true;
+    return;
+  }
+  const data = {
+    name, entity, email,
+    status: 'in_progress',
+    score: 0,
+    finalScore: 0,
+    nCorrect: 0, nRisky: 0, nPoor: 0,
+    scenesCompleted: 0,
+    sceneResults: [],
+    startTime: new Date().toISOString(),
+    endTime: null,
+    module: 'cv_fraud'
+  };
+  try {
+    participantRef = push(ref(db, `cv_fraud_sessions/${activeSessionId}/participants`));
+    await set(participantRef, data);
+    console.log('Participant registered:', participantRef.key);
+  } catch(e) { console.warn('Firebase register failed:', e); }
+};
+
+/* ── Save scene result ── */
+window.fbSaveScene = async function(sceneNum, choiceType, pts, currentScore, nC, nR, nP) {
+  if (!participantRef) return;
+  try {
+    const { update, ref: fbRef } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js");
+    const snap = await get(participantRef);
+    const existing = snap.exists() ? (snap.val().sceneResults || []) : [];
+    existing[sceneNum - 1] = { type: choiceType, points: pts };
+    await set(participantRef, {
+      ...(snap.val() || {}),
+      score: currentScore,
+      finalScore: currentScore,
+      nCorrect: nC, nRisky: nR, nPoor: nP,
+      scenesCompleted: sceneNum,
+      sceneResults: existing,
+      status: 'in_progress'
+    });
+  } catch(e) { console.warn('Firebase scene save failed:', e); }
+};
+
+/* ── Mark completed ── */
+window.fbComplete = async function(finalScore, nC, nR, nP) {
+  if (!participantRef) return;
+  try {
+    const snap = await get(participantRef);
+    await set(participantRef, {
+      ...(snap.val() || {}),
+      finalScore, score: finalScore,
+      nCorrect: nC, nRisky: nR, nPoor: nP,
+      scenesCompleted: 5,
+      status: 'completed',
+      endTime: new Date().toISOString()
+    });
+    console.log('Participant completed. Score:', finalScore);
+  } catch(e) { console.warn('Firebase complete failed:', e); }
+};
+</script>
+
+<!-- Registration Modal (shown before module starts) -->
+<div id="reg-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:500;align-items:center;justify-content:center;padding:20px;font-family:'Source Sans 3',sans-serif">
+  <div style="background:#fff;border-radius:12px;padding:28px;width:100%;max-width:420px;box-shadow:0 24px 60px rgba(0,0,0,0.3)">
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:2em;margin-bottom:8px">🔍</div>
+      <div style="font-family:'Raleway',sans-serif;font-size:1.2em;font-weight:800;color:#003e4a">CV Fraud Detection</div>
+      <div style="font-size:0.82em;color:#5c6b75;margin-top:4px">Please enter your details to begin. Your results will be recorded for training records.</div>
+    </div>
+    <div id="reg-no-session" style="display:none;background:#fff8e4;border-left:4px solid #f8b61d;border-radius:4px;padding:9px 12px;font-size:0.82em;color:#5a3e00;margin-bottom:14px">
+      ⚠️ No active session found. Your score will <b>not</b> be saved. Please ask your facilitator to activate a session on the dashboard.
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="display:block;font-size:0.74em;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#5c6b75;margin-bottom:4px">Full Name <span style="color:#d22328">*</span></label>
+      <input id="reg-name" type="text" placeholder="Your full name"
+        style="width:100%;padding:10px 13px;border:1.5px solid #dde4e8;border-radius:7px;font-family:'Source Sans 3',sans-serif;font-size:0.9em;color:#1a2430;background:#f5f7f9;outline:none"
+        onfocus="this.style.borderColor='#003e4a'" onblur="this.style.borderColor='#dde4e8'">
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="display:block;font-size:0.74em;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#5c6b75;margin-bottom:4px">Entity / Office</label>
+      <input id="reg-entity" type="text" placeholder="e.g. SYSTRA Paris, SYSTRA India"
+        style="width:100%;padding:10px 13px;border:1.5px solid #dde4e8;border-radius:7px;font-family:'Source Sans 3',sans-serif;font-size:0.9em;color:#1a2430;background:#f5f7f9;outline:none"
+        onfocus="this.style.borderColor='#003e4a'" onblur="this.style.borderColor='#dde4e8'">
+    </div>
+    <div style="margin-bottom:20px">
+      <label style="display:block;font-size:0.74em;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#5c6b75;margin-bottom:4px">Email</label>
+      <input id="reg-email" type="email" placeholder="your.email@systra.com"
+        style="width:100%;padding:10px 13px;border:1.5px solid #dde4e8;border-radius:7px;font-family:'Source Sans 3',sans-serif;font-size:0.9em;color:#1a2430;background:#f5f7f9;outline:none"
+        onfocus="this.style.borderColor='#003e4a'" onblur="this.style.borderColor='#dde4e8'">
+    </div>
+    <button id="reg-btn" onclick="submitRegistration()"
+      style="width:100%;background:#d22328;color:white;border:none;border-radius:7px;padding:12px;font-family:'Raleway',sans-serif;font-size:0.95em;font-weight:800;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:background .2s"
+      onmouseover="this.style.background='#a51a1e'" onmouseout="this.style.background='#d22328'">
+      ▶ &nbsp;Begin Training
+    </button>
+    <div style="text-align:center;font-size:0.74em;color:#8a9baa;margin-top:12px">🔒 Your data is only used for SYSTRA internal training records</div>
+  </div>
+</div>
+
 <script>
 /* ══════════════════════════════════════
    SCENE DATA
@@ -1054,7 +1121,31 @@ function navTo(n){
   revealEmails(n);
 }
 
-function startModule(){ sfxFan(); unlock(1); showScreen('scene-1'); setSB(1); setProgress(1); revealEmails(1); }
+function startModule(){
+  // Show registration modal before starting
+  const ov = document.getElementById('reg-overlay');
+  ov.style.display = 'flex';
+  // Check for active session async
+  if (window.fbFindActiveSession) {
+    window.fbFindActiveSession().then(sid => {
+      if (!sid) document.getElementById('reg-no-session').style.display = 'block';
+    });
+  }
+}
+
+async function submitRegistration(){
+  const name   = document.getElementById('reg-name').value.trim();
+  const entity = document.getElementById('reg-entity').value.trim();
+  const email  = document.getElementById('reg-email').value.trim();
+  if (!name) { document.getElementById('reg-name').style.borderColor='#d22328'; document.getElementById('reg-name').focus(); return; }
+  const btn = document.getElementById('reg-btn');
+  btn.textContent = 'Starting…'; btn.disabled = true;
+  // Register in Firebase (non-blocking — don't delay start if Firebase fails)
+  if (window.fbRegister) await window.fbRegister(name, entity, email).catch(()=>{});
+  document.getElementById('reg-overlay').style.display = 'none';
+  btn.textContent = '▶  Begin Training'; btn.disabled = false;
+  sfxFan(); unlock(1); showScreen('scene-1'); setSB(1); setProgress(1); revealEmails(1);
+}
 function goNext(n){ sfxClick(); unlock(n+1); showScreen('scene-'+(n+1)); setSB(n+1); setProgress(n+1); revealEmails(n+1); }
 
 /* ══════════════════════════════════════
@@ -1083,6 +1174,8 @@ function choose(scene,opt,type){
   const nv=document.getElementById('nav-'+scene); if(nv)nv.classList.add('done');
   document.getElementById('c'+scene).disabled=false;
   setTimeout(()=>dp.scrollIntoView({behavior:'smooth',block:'nearest'}),300);
+  // ── Firebase: save scene result ──
+  if (window.fbSaveScene) window.fbSaveScene(scene, type, pts, score, nC, nR, nP).catch(()=>{});
 }
 
 function showResults(){
@@ -1099,6 +1192,8 @@ function showResults(){
   document.getElementById('rTitle').textContent=ti;
   document.getElementById('rSub').textContent=su;
   showScreen('s-results'); setSB('r'); setProgress('r');
+  // ── Firebase: mark completed ──
+  if (window.fbComplete) window.fbComplete(score, nC, nR, nP).catch(()=>{});
 }
 
 function replay(){
@@ -1147,20 +1242,17 @@ function toggleEmail(h){
   }
 }
 
-/* ── MOBILE SIDEBAR TOGGLE ── */
+/* ── MOBILE SIDEBAR ── */
 function toggleSidebar(){
-  const sb = document.querySelector('.sidebar');
-  const ov = document.getElementById('sidebarOverlay');
-  sb.classList.toggle('open');
-  ov.classList.toggle('open');
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
 }
 function closeSidebar(){
   document.querySelector('.sidebar').classList.remove('open');
   document.getElementById('sidebarOverlay').classList.remove('open');
 }
-// Close sidebar on nav item click (mobile)
 document.querySelectorAll('.sb-item').forEach(el=>{
-  el.addEventListener('click', ()=>{ if(window.innerWidth<=640) closeSidebar(); });
+  el.addEventListener('click',()=>{ if(window.innerWidth<=640) closeSidebar(); });
 });
 
 /* ── INIT ── */
