@@ -317,6 +317,146 @@ html, body {
   transform: translateY(0);
   pointer-events: auto;
 }
+
+/* ══════════════════════════════════════
+   MOBILE RESPONSIVE — hamburger + overlay
+══════════════════════════════════════ */
+
+/* Hamburger button — hidden on desktop */
+.hamburger {
+  display: none;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  width: 32px; height: 32px;
+  border-radius: 5px;
+  align-items: center; justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Sidebar overlay backdrop */
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 200;
+}
+.sidebar-overlay.open { display: block; }
+
+@media (max-width: 640px) {
+  /* Allow body to scroll on mobile */
+  html, body { overflow: auto; height: auto; }
+
+  #app {
+    position: relative;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  /* Show hamburger */
+  .hamburger { display: flex; }
+
+  /* Hide course text to save space on very small screens */
+  .tb-course { font-size: 10px; }
+
+  /* Sidebar: slide in from left as overlay */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 230px;
+    z-index: 300;
+    transform: translateX(-100%);
+    transition: transform .28s ease;
+    overflow-y: auto;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.25);
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  /* Content takes full width */
+  .body-wrap { display: block; overflow: visible; }
+
+  .content {
+    overflow: visible;
+    height: auto;
+    min-height: calc(100vh - 50px);
+  }
+
+  /* Screens and scenes flow naturally */
+  .screen, .screen.show { display: block; }
+  .screen.show { display: flex; flex-direction: column; }
+
+  .scene { display: none; flex-direction: column; }
+  .scene.show { display: flex; }
+
+  /* Intro screen */
+  #s-intro {
+    min-height: calc(100vh - 50px);
+    padding: 24px 18px;
+  }
+
+  /* Results screen */
+  #s-results {
+    min-height: calc(100vh - 50px);
+    padding: 24px 18px;
+  }
+
+  /* Scene header: stack icon+meta, keep pts badge */
+  .sc-hdr {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+  .hdr-icon { width: 36px; height: 36px; font-size: 18px; }
+  .hdr-title { font-size: 15px; }
+  .hdr-sub { font-size: 10.5px; }
+  .hdr-pts { padding: 5px 10px; }
+  .hdr-pts-val { font-size: 16px; }
+
+  /* Email thread */
+  .email-wrap { padding: 8px 12px 4px; }
+  .em-head { padding: 8px 10px; gap: 7px; }
+  .em-av { width: 26px; height: 26px; font-size: 9px; }
+  .em-from { font-size: 11px; }
+  .em-prev { font-size: 9.5px; }
+  .em-body { padding: 9px 11px; font-size: 12px; }
+
+  /* Context + question */
+  .ctx-box { margin: 4px 12px 6px; font-size: 12px; padding: 8px 12px; }
+  .q-zone { padding: 0 12px 10px; }
+  .q-text { font-size: 12.5px; }
+  .opt-btn { font-size: 12px; padding: 9px 10px; gap: 8px; }
+  .opt-l { width: 24px; height: 24px; font-size: 11px; }
+
+  /* Debrief */
+  .debrief { margin: 0 12px 10px; }
+  .db-hdr { font-size: 12px; padding: 8px 12px; }
+  .db-body { font-size: 12px; padding: 9px 12px; }
+
+  /* Continue button */
+  .cont-row { padding: 2px 12px 14px; }
+  .cont-btn { font-size: 12px; padding: 9px 18px; width: 100%; justify-content: center; }
+
+  /* Alert bar */
+  .alert { font-size: 11.5px; padding: 7px 12px; }
+
+  /* Stats on intro */
+  .i-stat { min-width: 72px; padding: 7px 10px; }
+  .i-stat-n { font-size: 17px; }
+  .i-title { font-size: 19px; }
+  .i-sub { font-size: 12px; }
+
+  /* Results chips */
+  .chip { padding: 7px 12px; min-width: 64px; }
+  .chip span { font-size: 18px; }
+
+  /* Score ring */
+  .r-ring { width: 100px; height: 100px; }
+  .r-score { font-size: 28px; }
+  .r-title { font-size: 17px; }
+}
 </style>
 </head>
 <body>
@@ -324,6 +464,7 @@ html, body {
 
   <!-- TOP BAR -->
   <div class="topbar">
+    <button class="hamburger" id="hambBtn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
     <div class="tb-logo">
       <img src="Logo_SYSTRA.png" class="tb-logo-img" alt="SYSTRA"
         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
@@ -332,6 +473,8 @@ html, body {
     <div class="tb-course">Internal Control · CV Fraud Detection</div>
     <button class="tb-sound" id="soundBtn" onclick="toggleSound()">🔊 Sound</button>
   </div>
+  <!-- Sidebar overlay for mobile -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
   <div class="red-line"></div>
   <div class="prog-track"><div class="prog-fill" id="prog" style="width:0%"></div></div>
 
@@ -1003,6 +1146,22 @@ function toggleEmail(h){
     }
   }
 }
+
+/* ── MOBILE SIDEBAR TOGGLE ── */
+function toggleSidebar(){
+  const sb = document.querySelector('.sidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('open');
+}
+function closeSidebar(){
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+// Close sidebar on nav item click (mobile)
+document.querySelectorAll('.sb-item').forEach(el=>{
+  el.addEventListener('click', ()=>{ if(window.innerWidth<=640) closeSidebar(); });
+});
 
 /* ── INIT ── */
 showScreen('s-intro'); setSB(0);
