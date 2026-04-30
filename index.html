@@ -908,13 +908,13 @@ window.fbRegister = async function(name, entity, email) {
 };
 
 /* ── Save scene result ── */
-window.fbSaveScene = async function(sceneNum, choiceType, pts, currentScore, nC, nR, nP) {
+window.fbSaveScene = async function(sceneNum, choiceType, pts, currentScore, nC, nR, nP, optionLetter) {
   if (!participantRef) return;
   try {
     const { update, ref: fbRef } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js");
     const snap = await get(participantRef);
     const existing = snap.exists() ? (snap.val().sceneResults || []) : [];
-    existing[sceneNum - 1] = { type: choiceType, points: pts };
+    existing[sceneNum - 1] = { type: choiceType, points: pts, option: optionLetter || '' };
     await set(participantRef, {
       ...(snap.val() || {}),
       score: currentScore,
@@ -1175,7 +1175,7 @@ function choose(scene,opt,type){
   document.getElementById('c'+scene).disabled=false;
   setTimeout(()=>dp.scrollIntoView({behavior:'smooth',block:'nearest'}),300);
   // ── Firebase: save scene result ──
-  if (window.fbSaveScene) window.fbSaveScene(scene, type, pts, score, nC, nR, nP).catch(()=>{});
+  if (window.fbSaveScene) window.fbSaveScene(scene, type, pts, score, nC, nR, nP, opt).catch(()=>{});
 }
 
 function showResults(){
